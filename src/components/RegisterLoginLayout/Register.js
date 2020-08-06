@@ -1,21 +1,10 @@
 import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import {styles, useStylesComplete} from "../../theme/theme.js";
+import {ButtonDashboard} from "../../theme/theme.js";
 import { useHistory } from "react-router-dom";
 import "../../App.css"
 
-
-
-
-const useStylesComplete = makeStyles({
-    root: {
-      background: 'white',
-      width: "100%"
-    }
-  });
-  const marginBottom={marginBottom:"5%"}
-  
 function Register(){
 const classes =useStylesComplete();
 let history = useHistory();
@@ -27,11 +16,11 @@ let history = useHistory();
         <div>
             <h2 style={{textAlign:"center",color:"white"}}>Sign up</h2>
             <div>
-                <div style={marginBottom}><TextField classes={{root: classes.root}} id="filled-basic" label="Documento" variant="filled"/></div>
-                <div style={marginBottom}><TextField classes={{root: classes.root}} id="filled-basic" label="Nombres" variant="filled"/></div>
-                <div style={marginBottom}><TextField classes={{root: classes.root}}id="filled-basic" label="Email" variant="filled" /></div>
-                <div style={marginBottom}><TextField classes={{root: classes.root}} id="filled-basic" label="Celular" variant="filled" /></div>
-                <div className="perfectCentered"><Button onClick={handlerRegistrar} variant="contained" color="#1ab187">Registrar</Button></div>
+                <div style={styles.marginBottom}><TextField classes={{root: classes.root}} id="filled-basic" label="Documento" variant="filled"/></div>
+                <div style={styles.marginBottom}><TextField classes={{root: classes.root}} id="filled-basic" label="Nombres" variant="filled"/></div>
+                <div style={styles.marginBottom}><TextField classes={{root: classes.root}}id="filled-basic" label="Email" variant="filled" /></div>
+                <div style={styles.marginBottom}><TextField classes={{root: classes.root}} id="filled-basic" label="Celular" variant="filled" /></div>
+                <div className="perfectCentered"><ButtonDashboard onClick={handlerRegistrar} variant="contained" color="#1ab187">Registrar</ButtonDashboard></div>
             </div>
         </div>
     )
