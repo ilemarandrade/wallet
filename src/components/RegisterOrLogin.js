@@ -3,12 +3,13 @@ import "./RegisterOrLogin.css";
 import Register from "./RegisterLoginLayout/Register.js"
 import Login from "./RegisterLoginLayout/Login.js"
 
+
+
+
 function RegisterOrLogin(){
     const [changeProcess,setchangeProcess]=useState(true);
     const typeProcess= changeProcess ? <Register/>:<Login />;
     const handlerTypeProcess=(e)=>{
-        console.log(changeProcess);
-        console.log(e.target.id);
         e.target.id==="Signup" && setchangeProcess(true)
         e.target.id!=="Signup" && setchangeProcess(false)
     }
