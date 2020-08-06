@@ -10,11 +10,16 @@ import RegisterOrLogin from "./components/RegisterOrLogin";
 function App() {
   return (
       <Router>
-        <Switch>
-          <Route path="/">
-            <RegisterOrLogin></RegisterOrLogin>
-          </Route>
-        </Switch>
+        <div className="app">  
+          <Switch>
+            <Route path="/">
+              <RegisterOrLogin></RegisterOrLogin>
+            </Route>
+            <Route path="/dashbord">
+              <Dashbord></Dashbord>
+            </Route>
+          </Switch>
+          </div> 
       </Router>
   );
 }
