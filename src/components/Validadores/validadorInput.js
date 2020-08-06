@@ -8,7 +8,7 @@ export function validateOnlyNumbers(value) {
 }
 
 export function validateOnlyLetters(value){
-  if(/[\sA-Za-z]/.test(value)===false) {
+  if(!value.match(/[\W0-9]/g)===false) {
     return true
   }
 }
