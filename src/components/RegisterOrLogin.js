@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import "./RegisterOrLogin.css";
+import {crearStorage} from "../localStorage.js"
 import Register from "./RegisterLoginLayout/Register.js"
 import Login from "./RegisterLoginLayout/Login.js"
-
-
-
 
 function RegisterOrLogin(){
     const [changeProcess,setchangeProcess]=useState(true);
@@ -13,6 +11,8 @@ function RegisterOrLogin(){
         e.target.id==="Signup" && setchangeProcess(true)
         e.target.id!=="Signup" && setchangeProcess(false)
     }
+    crearStorage();
+    
 return(
     <div id="registerOrLogin"className="perfectCentered">
         <h1>Billetera</h1>
