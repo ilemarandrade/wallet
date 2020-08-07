@@ -1,3 +1,30 @@
+Usuarios registrados en la aplicacion:
+
+    1){
+        "documento":"26996654",
+        "nombres":"Ilemar Andrade",
+        "email":"ilemarandrade@gmail.com",
+        "celular":"04144505536",
+        "saldo":"3000"
+    }
+
+    2){
+        "documento":"123456789",
+        "nombres":"Maria Rondon",
+        "email":"mariarondon@gmail.com",
+        "celular":"04121234567",
+        "saldo":"3000"
+    }
+
+    3){
+        "documento":"23456789",
+        "nombres":"Jose Ruiz",
+        "email":"joseruiz@gmail.com",
+        "celular":"0426234567891",
+        "saldo":"3000"
+        },
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
