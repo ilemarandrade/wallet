@@ -13,6 +13,7 @@ const [valueDocumento,setvalueDocumento]=useState("");
 const [valueEmail,setvalueEmail]=useState("");
 const loginComplete=()=>{
   let dataUsuarios= JSON.parse(localStorage.getItem("user")).filter(user=>user.documento===valueDocumento);
+  console.log(dataUsuarios);
   if(valueDocumento==="" || valueEmail===""){
     alert("Faltan Datos");
     return

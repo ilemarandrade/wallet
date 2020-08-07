@@ -31,6 +31,10 @@ const handlerRegistrar=()=>{
   else if((!errorDocumento && !errorEmail) && (!errorCelular && !errorNombre)){
     alert("Ahora ya puede hacer login");
     localStorage.setItem("user",JSON.stringify([...usuarios,{...signUp}]))
+    setvalueCelular("");
+    setvalueEmail("");
+    setvalueNombre("");
+    setvalueDocumento("")
   }  
   else{
     alert("Completa los campos correctamente");
@@ -61,10 +65,10 @@ const handlerRegistrar=()=>{
         <div>
             <h2 style={{textAlign:"center",color:"white"}}>Sign up</h2>
             <div>
-                <div style={styles.marginBottom}><TextField classes={{root: classes.root}} id="documento" error={errorDocumento} onChange={handlerDocumento} inputProps={{maxlength:10}} required="true"label="Documento" variant="filled"/></div>
-                <div style={styles.marginBottom}><TextField classes={{root: classes.root}} id="nombres" error={errorNombre} onChange={handlerNombre} inputProps={{maxlength:40}} required="true" label="Nombres" variant="filled"/></div>
-                <div style={styles.marginBottom}><TextField classes={{root: classes.root}} id="email" error={errorEmail} required="true" onChange={handlerEmail} inputProps={{maxlength:45}} label="Email" variant="filled" /></div>
-                <div style={styles.marginBottom}><TextField classes={{root: classes.root}} error={errorCelular} onChange={handlerCelular} inputProps={{maxlength:12}}required="true" label="Celular" variant="filled" /></div>
+                <div style={styles.marginBottom}><TextField classes={{root: classes.root}} id="documento" error={errorDocumento} onChange={handlerDocumento} inputProps={{maxlength:10}} required="true"label="Documento" variant="filled" value={valueDocumento}/></div>
+                <div style={styles.marginBottom}><TextField classes={{root: classes.root}} id="nombres" error={errorNombre} onChange={handlerNombre} inputProps={{maxlength:40}} required="true" label="Nombres" variant="filled" value={valueNombre}/></div>
+                <div style={styles.marginBottom}><TextField classes={{root: classes.root}} id="email" error={errorEmail} required="true" onChange={handlerEmail} inputProps={{maxlength:45}} label="Email" variant="filled" value={valueEmail} /></div>
+                <div style={styles.marginBottom}><TextField classes={{root: classes.root}} error={errorCelular} onChange={handlerCelular} inputProps={{maxlength:12}}required="true" label="Celular" variant="filled" value={valueCelular} /></div>
                 <div className="perfectCentered"><ButtonDashboard onClick={handlerRegistrar} variant="contained" color="#1ab187">Registrar</ButtonDashboard></div>
             </div>
         </div>

@@ -38,7 +38,6 @@ function Recargar(){
                  return}
                 alert("No coincide los datos");
             }  
-            console.log(dataUsuarios);
           });
 
 
