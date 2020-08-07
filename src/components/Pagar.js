@@ -36,6 +36,7 @@ function Pagar(){
                     ele.saldo =parseInt(ele.saldo)-parseInt(valueMontoPago)
                  localStorage.setItem("user",JSON.stringify(dataUsuarios));
                  history.push("/dashboard")
+                 alert("Pago exitoso")
                  return
                 }
           });

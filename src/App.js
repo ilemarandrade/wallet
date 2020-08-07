@@ -39,9 +39,19 @@ function App() {
               <Consulta></Consulta>
             </PrivateRoute>
           </Switch>
+          <div style={styleMadeBy}>Creado por el web developer Ilemar Andrade</div>
           </div> 
       </Router>
   );
 }
 
+const styleMadeBy={
+  borderTop: "#f9f9f9 1px solid",
+  color: "white",
+  textAlign: "center",
+  marginTop: "30px",
+  position: "absolute",
+  bottom: "2%",
+  width: "100%",
+}
 export default App;
