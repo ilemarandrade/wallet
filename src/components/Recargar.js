@@ -49,7 +49,7 @@ function Recargar(){
             <div  style={styles.styleContainerDivAction}>
                 <div style={styles.marginBottom}><TextField classes={{root: classes.root}} onChange={handlerDocumento} id="filled-basic" label="Documento" variant="filled"/></div>
                 <div style={styles.marginBottom}><TextField classes={{root: classes.root}} onChange={handlerCelular}id="filled-basic" label="Celular" variant="filled" /></div>
-                <div style={styles.marginBottom}><TextField classes={{root: classes.root}} onChange={handlerRecarga} type="number" id="filled-basic" label="Valor de Recarga" variant="filled" /></div>
+                <div style={styles.marginBottom}><TextField classes={{root: classes.root}} onChange={handlerRecarga} type="number" inputProps={{min:"1"}} id="filled-basic" label="Valor de Recarga" variant="filled" /></div>
                 <div className="perfectCentered"><ButtonDashboard onClick={recargar} variant="contained" color="#1ab187">Recargar</ButtonDashboard></div>
             </div>
         </div>
