@@ -34,6 +34,7 @@ function Recargar(){
                     ele.saldo =parseInt(ele.saldo)+ parseInt(valueRecarga)
                  localStorage.setItem("user",JSON.stringify(dataUsuarios));
                  history.push("/dashboard")
+                 alert("Recarga Exitosa")
                  return}
                 alert("No coincide los datos");
             }  
