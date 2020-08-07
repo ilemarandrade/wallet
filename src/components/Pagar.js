@@ -31,6 +31,7 @@ function Pagar(){
             if(ele.email===valueEmail){
                     if(parseInt(ele.saldo)< parseInt(valueMontoPago)){
                         alert("Saldo insuficiente para hacer esta operacion");
+                        return
                     }
                     ele.saldo =parseInt(ele.saldo)-parseInt(valueMontoPago)
                  localStorage.setItem("user",JSON.stringify(dataUsuarios));
@@ -47,7 +48,7 @@ function Pagar(){
         <div>
             <div  style={styles.styleContainerDivAction}>
                 <div style={styles.marginBottom}><TextField classes={{root: classes.root}} onChange={handlerEmail} id="filled-basic" label="Email" variant="filled"/></div>
-                <div style={styles.marginBottom}><TextField classes={{root: classes.root}} onChange={handlerMontoPago} id="filled-basic" label="Monto de Pago" variant="filled" /></div>
+                <div style={styles.marginBottom}><TextField classes={{root: classes.root}} onChange={handlerMontoPago} type="number" inputProps={{min:"1"}} id="filled-basic" label="Monto de Pago" variant="filled" /></div>
                 <div style={styles.marginBottom}><TextField classes={{root: classes.root}} onChange={handlerConceptoPago} id="filled-basic" label="Concepto de Pago" variant="filled" /></div>
                 <div className="perfectCentered"><ButtonDashboard onClick={Pagar} variant="contained" color="#1ab187">Pagar</ButtonDashboard></div>
             </div>
