@@ -16,7 +16,6 @@ import PrivateRoute from "./components/PrivateRoute"
 
 
 function App() {
-  let history=useHistory();
   useEffect(() => {crearStorage();},[]);
 
   return (
