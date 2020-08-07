@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import {crearStorage} from "./localStorage.js"
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,6 +13,7 @@ import Recargar from "./components/Recargar.js"
 import Pagar from "./components/Pagar.js"
 
 function App() {
+  useEffect(() => {crearStorage();},[]);
   return (
       <Router>
         <div className="app">  

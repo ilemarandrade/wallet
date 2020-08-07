@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState} from 'react';
 import TextField from '@material-ui/core/TextField';
 import {styles, useStylesComplete} from "../../theme/theme.js";
 import {ButtonDashboard} from "../../theme/theme.js";
@@ -28,8 +28,8 @@ const handlerRegistrar=()=>{
   if(valueDocumento==="" || valueNombre===""  || valueEmail==="" || valueCelular===""){
     return
   }
-  if((!errorDocumento && !errorEmail) && (!errorCelular && !errorNombre)){
-    history.push("/dashboard");
+  else if((!errorDocumento && !errorEmail) && (!errorCelular && !errorNombre)){
+    alert("Ahora ya puede hacer login");
     localStorage.setItem("user",JSON.stringify([...usuarios,{...signUp}]))
   }  
   else{
