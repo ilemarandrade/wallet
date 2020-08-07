@@ -1,3 +1,6 @@
+Video 1era Fase https://www.loom.com/share/581da635379c44e1961b68195c1b5f98
+Video 2da Fase https://www.loom.com/share/db962b63d4c641a1b1589c0f38fdc981
+La unica funcion que no realiza la aplicación es la de "Confirmar Pago" por razones de que todo fue hecho desde el Front-end
 Usuarios registrados en la aplicacion:
 
     1){
