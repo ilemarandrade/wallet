@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import "./RegisterOrLogin.css";
 import {crearStorage} from "../localStorage.js"
 import Register from "./RegisterLoginLayout/Register.js"
@@ -11,7 +11,7 @@ function RegisterOrLogin(){
         e.target.id==="Signup" && setchangeProcess(true)
         e.target.id!=="Signup" && setchangeProcess(false)
     }
-    crearStorage();
+    useEffect(() => {crearStorage();},[]);
     
 return(
     <div id="registerOrLogin"className="perfectCentered">
