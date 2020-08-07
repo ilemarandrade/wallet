@@ -12,8 +12,7 @@ let history = useHistory();
 const [valueDocumento,setvalueDocumento]=useState("");
 const [valueEmail,setvalueEmail]=useState("");
 const loginComplete=()=>{
-  let dataUsuarios= JSON.parse(localStorage.getItem("user")).filter(user=>user.documento===valueDocumento);
-  console.log(dataUsuarios);
+  let dataUsuarios= JSON.parse(localStorage.getItem("user")).filter(user=>user.documento===valueDocumento)
   if(valueDocumento==="" || valueEmail===""){
     alert("Faltan Datos");
     return
@@ -22,7 +21,11 @@ const loginComplete=()=>{
     alert("Los datos ingresados no coinciden o no esta registrado")
     return
   }
-  dataUsuarios[0]["email"]===valueEmail ? history.push("/dashboard"):alert("No coincide el documento con el email")
+  else if(dataUsuarios[0]["email"]===valueEmail){
+    history.push("/dashboard")
+    localStorage.setItem("userLogin",JSON.stringify([{userLogiado:true,userOnline:dataUsuarios[0]["nombres"]}]))
+  } 
+  else{alert("No coincide el documento con el email")}
  }
 
 
