@@ -3,7 +3,6 @@ import "../App.css";
 import {styles, useStylesComplete} from "../theme/theme.js"
 import { useHistory } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
-import {validateOnlyNumbers} from "./Validadores/validadorInput.js";
 import {ButtonDashboard} from "../theme/theme.js";
 
 
@@ -50,7 +49,7 @@ function Recargar(){
                 <div style={styles.marginBottom}><TextField classes={{root: classes.root}} onChange={handlerDocumento} id="filled-basic" label="Documento" variant="filled"/></div>
                 <div style={styles.marginBottom}><TextField classes={{root: classes.root}} onChange={handlerCelular}id="filled-basic" label="Celular" variant="filled" /></div>
                 <div style={styles.marginBottom}><TextField classes={{root: classes.root}} onChange={handlerRecarga} type="number" inputProps={{min:"1"}} id="filled-basic" label="Valor de Recarga" variant="filled" /></div>
-                <div className="perfectCentered"><ButtonDashboard onClick={recargar} variant="contained" color="#1ab187">Recargar</ButtonDashboard></div>
+                <div className="perfectCentered"><ButtonDashboard onClick={recargar} variant="contained">Recargar</ButtonDashboard></div>
             </div>
         </div>
       
