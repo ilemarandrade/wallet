@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState} from 'react';
+import { useHistory } from "react-router-dom";
 import {crearStorage} from "./localStorage.js"
 import {
   BrowserRouter as Router,
@@ -13,8 +14,11 @@ import Recargar from "./components/Recargar.js"
 import Pagar from "./components/Pagar.js"
 import PrivateRoute from "./components/PrivateRoute"
 
+
 function App() {
+  let history=useHistory();
   useEffect(() => {crearStorage();},[]);
+
   return (
       <Router>
         <div className="app">  
