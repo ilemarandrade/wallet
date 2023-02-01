@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
-import { styles, useStylesComplete } from "../theme/theme.js";
-import { ButtonDashboard } from "../theme/theme.js";
 import { useHistory } from "react-router-dom";
+import { Box, Button } from "@material-ui/core";
 
 function Login() {
-  const classes = useStylesComplete();
   let history = useHistory();
   const [valueDocumento, setvalueDocumento] = useState("");
   const [valueEmail, setvalueEmail] = useState("");
@@ -42,35 +40,33 @@ function Login() {
   return (
     <div>
       <h2 style={{ textAlign: "center", color: "white" }}>Login</h2>
-      <div>
-        <div style={styles.marginBottom}>
+      <Box sx={{ mb: 1 }}>
+        <div>
           <TextField
-            classes={{ root: classes.root }}
             onChange={handlerDocumento}
-            id="filled-basic"
             label="Documento"
             variant="filled"
+            fullWidth
           />
         </div>
-        <div style={styles.marginBottom}>
+        <div>
           <TextField
-            classes={{ root: classes.root }}
             onChange={handlerEmail}
-            id="filled-basic"
             label="Email"
             variant="filled"
+            fullWidth
           />
         </div>
-      </div>
-      <div className="perfectCentered">
-        <ButtonDashboard
-          onClick={loginComplete}
-          variant="contained"
-          color="#1ab187"
-        >
-          Entrar
-        </ButtonDashboard>
-      </div>
+      </Box>
+      <Button
+        onClick={loginComplete}
+        variant="contained"
+        color="primary"
+        fullWidth
+        sx={{}}
+      >
+        Entrar
+      </Button>
     </div>
   );
 }

@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import "../App.css";
-import { styles, useStylesComplete } from "../theme/theme.js";
 import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
-import { ButtonDashboard } from "../theme/theme.js";
+import { Button } from "@material-ui/core";
 
 function Recharge() {
   let history = useHistory();
-  const classes = useStylesComplete();
   const [valueDocumento, setvalueDocumento] = useState("");
   const [valueCelular, setvalueCelular] = useState("");
   const [valueRecarga, setvalueRecarga] = useState("");
@@ -43,28 +40,25 @@ function Recharge() {
     <div className="perfectCentered column">
       <h1>Recharge</h1>
       <div>
-        <div style={styles.styleContainerDivAction}>
-          <div style={styles.marginBottom}>
+        <div>
+          <div>
             <TextField
-              classes={{ root: classes.root }}
               onChange={handlerDocumento}
               id="filled-basic"
               label="Documento"
               variant="filled"
             />
           </div>
-          <div style={styles.marginBottom}>
+          <div>
             <TextField
-              classes={{ root: classes.root }}
               onChange={handlerCelular}
               id="filled-basic"
               label="Celular"
               variant="filled"
             />
           </div>
-          <div style={styles.marginBottom}>
+          <div>
             <TextField
-              classes={{ root: classes.root }}
               onChange={handlerRecarga}
               type="number"
               inputProps={{ min: "1" }}
@@ -74,9 +68,9 @@ function Recharge() {
             />
           </div>
           <div className="perfectCentered">
-            <ButtonDashboard onClick={recargar} variant="contained">
+            <Button onClick={recargar} variant="contained">
               Recharge
-            </ButtonDashboard>
+            </Button>
           </div>
         </div>
       </div>

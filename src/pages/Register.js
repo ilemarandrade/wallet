@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
-import { styles, useStylesComplete } from "../theme/theme.js";
-import { ButtonDashboard } from "../theme/theme.js";
 import {
   validateOnlyLetters,
   validateOnlyNumbers,
   validateEmail,
 } from "../utils/validadorInput";
 import { usuarios } from "../localStorage.js";
+import { Button } from "@material-ui/core";
 
 function Register() {
-  const classes = useStylesComplete();
   const valueSignUp = {
     documento: "",
     nombres: "",
@@ -81,9 +79,8 @@ function Register() {
     <div>
       <h2 style={{ textAlign: "center", color: "white" }}>Sign up</h2>
       <div>
-        <div style={styles.marginBottom}>
+        <div>
           <TextField
-            classes={{ root: classes.root }}
             id="documento"
             error={errorDocumento}
             onChange={handlerDocumento}
@@ -92,11 +89,11 @@ function Register() {
             label="Documento"
             variant="filled"
             value={valueDocumento}
+            fullWidth
           />
         </div>
-        <div style={styles.marginBottom}>
+        <div>
           <TextField
-            classes={{ root: classes.root }}
             id="nombres"
             error={errorNombre}
             onChange={handlerNombre}
@@ -105,11 +102,11 @@ function Register() {
             label="Nombres"
             variant="filled"
             value={valueNombre}
+            fullWidth
           />
         </div>
-        <div style={styles.marginBottom}>
+        <div>
           <TextField
-            classes={{ root: classes.root }}
             id="email"
             error={errorEmail}
             required="true"
@@ -118,11 +115,11 @@ function Register() {
             label="Email"
             variant="filled"
             value={valueEmail}
+            fullWidth
           />
         </div>
-        <div style={styles.marginBottom}>
+        <div>
           <TextField
-            classes={{ root: classes.root }}
             error={errorCelular}
             onChange={handlerCelular}
             inputProps={{ maxlength: 12 }}
@@ -130,16 +127,18 @@ function Register() {
             label="Celular"
             variant="filled"
             value={valueCelular}
+            fullWidth
           />
         </div>
         <div className="perfectCentered">
-          <ButtonDashboard
+          <Button
             onClick={handlerRegistrar}
             variant="contained"
-            color="#1ab187"
+            color="primary"
+            fullWidth
           >
             Registrar
-          </ButtonDashboard>
+          </Button>
         </div>
       </div>
     </div>

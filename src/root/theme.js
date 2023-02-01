@@ -1,9 +1,26 @@
 import { createTheme } from "@material-ui/core/styles";
 
 const customTheme = createTheme({
+  overrides: {
+    MuiButton: {
+      root: {
+        height: 56,
+      },
+      containedPrimary: {
+        fontWeight: 600,
+      },
+    },
+    MuiTextField: {
+      root: {
+        marginBottom: 16,
+        background: "white",
+      },
+    },
+  },
   palette: {
     primary: {
-      main: "#6772e5",
+      main: "#1ab187",
+      contrastText: "white",
     },
   },
 });
