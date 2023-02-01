@@ -10,7 +10,6 @@ const PrivateRoute = (props) => {
     history.location.pathname === "/dashboard"
       ? setnotDashboard(false)
       : setnotDashboard(true);
-    console.log("entra a use effect");
     if (JSON.parse(localStorage.getItem("userLogin")) === null) {
       setTimeout(() => {
         history.push("/");
@@ -32,9 +31,7 @@ const PrivateRoute = (props) => {
 
   return (
     <>
-      {isLoading ? (
-        <div style={{ color: "white" }}>Cargando...</div>
-      ) : (
+      {isLoading ? null : ( // <div style={{ color: "white" }}>Cargando...</div>
         <Route {...props}>
           <div style={{ display: "flex" }}>
             <div style={stylesOfuserActived}>

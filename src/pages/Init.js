@@ -1,7 +1,37 @@
 import React, { useState } from "react";
-import "./RegisterOrLogin.css";
 import Register from "./Register.js";
 import Login from "./Login.js";
+import styled from "styled-components";
+import { Box, ButtonBase, Typography } from "@material-ui/core";
+
+const ContainerForm = styled.div`
+  ${({ theme }) => `
+    min-width: 365px;
+    background: #24303c;
+    padding: 5vh;
+    width: 20vw;
+    margin-top: 24px;
+    ${theme.breakpoints.down("xs")}{
+      min-width: 96vw;
+      margin: auto;
+    }
+  `}
+`;
+
+const SignInSignInButtons = styled.div`
+  display: flex;
+  height: 40px;
+`;
+
+const ButtonStyles = styled(ButtonBase)`
+  ${({ isActive }) => `
+      background: ${isActive ? "#1ab187" : "#435258"};
+      height: 100%;
+      width: 50%;
+      color: ${isActive ? "white" : "#b1b1b1"};
+      font-weight: 600
+    `}
+`;
 
 function RegisterOrLogin() {
   const [typeProcess, setTypeProcess] = useState(true);
@@ -9,29 +39,36 @@ function RegisterOrLogin() {
   const handlerTypeProcess = () => setTypeProcess(!typeProcess);
 
   return (
-    <div id="registerOrLogin" className="perfectCentered">
-      <h1>Billetera</h1>
-      <div id="containerLogin">
-        <div id="signUpOrLogin">
-          <div
-            id="Signup"
-            className="divsignUpOrLogin perfectCentered"
+    <Box
+      sx={{
+        flexDirection: "column",
+        "& h1": { color: "white", fontWeight: 600 },
+      }}
+      className="perfectCentered"
+    >
+      <Typography variant="h4" component="h1">
+        Billetera
+      </Typography>
+      <ContainerForm>
+        <SignInSignInButtons>
+          <ButtonStyles
+            className="perfectCentered"
             onClick={handlerTypeProcess}
-            style={{ background: !typeProcess ? "#1ab187" : "#435258" }}
+            isActive={!typeProcess}
           >
-            <p id="Signup">Sign up</p>
-          </div>
-          <div
-            className="divsignUpOrLogin perfectCentered"
+            Sign up
+          </ButtonStyles>
+          <ButtonStyles
+            className="perfectCentered"
             onClick={handlerTypeProcess}
-            style={{ background: !typeProcess ? "#435258" : "#1ab187" }}
+            isActive={typeProcess}
           >
-            <p>Login</p>
-          </div>
-        </div>
+            Login
+          </ButtonStyles>
+        </SignInSignInButtons>
         <div>{form}</div>
-      </div>
-    </div>
+      </ContainerForm>
+    </Box>
   );
 }
 export default RegisterOrLogin;

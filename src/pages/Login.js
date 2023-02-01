@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import "../../App.css";
 import TextField from "@material-ui/core/TextField";
 import { styles, useStylesComplete } from "../theme/theme.js";
 import { ButtonDashboard } from "../theme/theme.js";
 import { useHistory } from "react-router-dom";
-import "../../App.css";
 
 function Login() {
   const classes = useStylesComplete();

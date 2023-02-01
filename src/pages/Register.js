@@ -8,7 +8,6 @@ import {
   validateEmail,
 } from "../utils/validadorInput";
 import { usuarios } from "../localStorage.js";
-import "../../App.css";
 
 function Register() {
   const classes = useStylesComplete();

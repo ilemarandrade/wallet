@@ -7,6 +7,7 @@ import Recharge from "../pages/Recharge";
 import Pay from "../pages/Pay";
 import BalanceInquiry from "../pages/BalanceInquiry";
 import PrivateRoute from "../components/PrivateRoute";
+import { Box } from "@material-ui/core";
 
 const privateRoutes = [
   {
@@ -29,16 +30,17 @@ const privateRoutes = [
 const Routes = () => (
   <Router>
     <Switch>
-      <Route exact path={routes.INIT}>
-        <Init />
-      </Route>
-      {privateRoutes.map(({ path, Component }) => (
-        <PrivateRoute exact path={path}>
-          <Component />
-        </PrivateRoute>
-      ))}
+      <Box sx={{ minHeight: "calc(100vh - 72px)", mb: 6, paddingY: 6 }}>
+        <Route exact path={routes.INIT}>
+          <Init />
+        </Route>
+        {privateRoutes.map(({ path, Component }) => (
+          <PrivateRoute exact path={path}>
+            <Component />
+          </PrivateRoute>
+        ))}
+      </Box>
     </Switch>
-    <div>Creado por el web developer Ilemar Andrade</div>
   </Router>
 );
 
