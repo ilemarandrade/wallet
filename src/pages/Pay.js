@@ -2,85 +2,78 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
+import MainLayout from "../layout/MainLayout";
+import { Controller, useForm } from "react-hook-form";
+import usePay from "../hook/api/usePay";
 
-function Pagar() {
+function Pay() {
   let history = useHistory();
-  const [valueEmail, setvalueEmail] = useState("");
-  const [valueMontoPago, setvalueMontoPago] = useState("");
-  const [valueConceptoPago, setvalueConcepto] = useState("");
-  const handlerEmail = (e) => {
-    setvalueEmail(e.target.value);
-  };
-  const handlerMontoPago = (e) => {
-    setvalueMontoPago(e.target.value);
-  };
-  const handlerConceptoPago = (e) => {
-    setvalueConcepto(e.target.value);
-  };
-  const Pagar = () => {
-    let dataUsuarios = JSON.parse(localStorage.getItem("user"));
-    if (
-      valueEmail === "" ||
-      valueMontoPago === "" ||
-      valueConceptoPago === ""
-    ) {
-      alert("Faltan Datos");
-      return;
-    }
-    dataUsuarios.forEach((ele) => {
-      if (ele.email === valueEmail) {
-        if (parseInt(ele.saldo) < parseInt(valueMontoPago)) {
-          alert("Saldo insuficiente para hacer esta operacion");
-          return;
-        }
-        ele.saldo = parseInt(ele.saldo) - parseInt(valueMontoPago);
-        localStorage.setItem("user", JSON.stringify(dataUsuarios));
-        history.push("/dashboard");
-        alert("Pago exitoso");
-        return;
+  const { mutate } = usePay();
+  const { handleSubmit, control } = useForm({
+    defaultValues: { email: "", password: "" },
+    // resolver: yupResolver(Schema),
+  });
+  const onSubmit = (values) => {
+    mutate(
+      { ...values },
+      {
+        onSuccess: () => {
+          alert("Exitoso");
+        },
       }
-    });
+    );
   };
   return (
-    <div className="perfectCentered column">
-      <h1>Pagar</h1>
-      <div>
-        <div>
-          <div>
+    <MainLayout title="Pay">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Controller
+          control={control}
+          name="amount"
+          render={({ field, fieldState }) => (
             <TextField
-              onChange={handlerEmail}
-              id="filled-basic"
-              label="Email"
+              {...{ ...field }}
+              error={fieldState.error}
+              helperText={fieldState?.error?.message}
+              label="Amount"
               variant="filled"
+              fullWidth
             />
-          </div>
-          <div>
+          )}
+        />
+        <Controller
+          control={control}
+          name="concept"
+          render={({ field, fieldState }) => (
             <TextField
-              onChange={handlerMontoPago}
-              type="number"
-              inputProps={{ min: "1" }}
-              id="filled-basic"
-              label="Monto de Pago"
+              {...{ ...field }}
+              error={fieldState.error}
+              helperText={fieldState?.error?.message}
+              label="Concept"
               variant="filled"
+              fullWidth
             />
-          </div>
-          <div>
+          )}
+        />
+        <Controller
+          control={control}
+          name="password"
+          render={({ field, fieldState }) => (
             <TextField
-              onChange={handlerConceptoPago}
-              id="filled-basic"
-              label="Concepto de Pago"
+              {...{ ...field }}
+              error={fieldState.error}
+              helperText={fieldState?.error?.message}
+              label="Password"
               variant="filled"
+              fullWidth
             />
-          </div>
-          <div className="perfectCentered">
-            <Button onClick={Pagar} variant="contained" color="#1ab187">
-              Pagar
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
+          )}
+        />
+        <Button type="submit" variant="contained" color="primary" fullWidth>
+          Recharge
+        </Button>
+      </form>
+    </MainLayout>
   );
 }
 
-export default Pagar;
+export default Pay;

@@ -2,79 +2,78 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
+import MainLayout from "../layout/MainLayout";
+import { Controller, useForm } from "react-hook-form";
+import useRecharge from "../hook/api/useRecharge";
 
 function Recharge() {
+  const { mutate } = useRecharge();
+  const { handleSubmit, control } = useForm({
+    defaultValues: { email: "", password: "" },
+    // resolver: yupResolver(Schema),
+  });
+
   let history = useHistory();
-  const [valueDocumento, setvalueDocumento] = useState("");
-  const [valueCelular, setvalueCelular] = useState("");
-  const [valueRecarga, setvalueRecarga] = useState("");
-  const handlerDocumento = (e) => {
-    setvalueDocumento(e.target.value);
-  };
-  const handlerRecarga = (e) => {
-    setvalueRecarga(e.target.value);
-  };
-  const handlerCelular = (e) => {
-    setvalueCelular(e.target.value);
-  };
-  const recargar = () => {
-    let dataUsuarios = JSON.parse(localStorage.getItem("user"));
-    if (valueDocumento === "" || valueCelular === "" || valueRecarga === "") {
-      alert("Faltan Datos");
-      return;
-    }
-    dataUsuarios.forEach((ele) => {
-      if (ele.documento === valueDocumento) {
-        if (ele.celular === valueCelular) {
-          ele.saldo = parseInt(ele.saldo) + parseInt(valueRecarga);
-          localStorage.setItem("user", JSON.stringify(dataUsuarios));
-          history.push("/dashboard");
-          alert("Recarga Exitosa");
-          return;
-        }
-        alert("No coincide los datos");
+  const onSubmit = (values) => {
+    mutate(
+      { ...values },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+        },
       }
-    });
+    );
   };
   return (
-    <div className="perfectCentered column">
-      <h1>Recharge</h1>
-      <div>
-        <div>
-          <div>
+    <MainLayout title="Recharge">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Controller
+          control={control}
+          name="amount"
+          render={({ field, fieldState }) => (
             <TextField
-              onChange={handlerDocumento}
-              id="filled-basic"
-              label="Documento"
+              {...{ ...field }}
+              error={fieldState.error}
+              helperText={fieldState?.error?.message}
+              label="Amount"
               variant="filled"
+              fullWidth
             />
-          </div>
-          <div>
+          )}
+        />
+        <Controller
+          control={control}
+          name="concept"
+          render={({ field, fieldState }) => (
             <TextField
-              onChange={handlerCelular}
-              id="filled-basic"
-              label="Celular"
+              {...{ ...field }}
+              error={fieldState.error}
+              helperText={fieldState?.error?.message}
+              label="Concept"
               variant="filled"
+              fullWidth
             />
-          </div>
-          <div>
+          )}
+        />
+        <Controller
+          control={control}
+          name="password"
+          render={({ field, fieldState }) => (
             <TextField
-              onChange={handlerRecarga}
-              type="number"
-              inputProps={{ min: "1" }}
-              id="filled-basic"
-              label="Valor de Recarga"
+              {...{ ...field }}
+              error={fieldState.error}
+              helperText={fieldState?.error?.message}
+              label="Password"
               variant="filled"
+              fullWidth
             />
-          </div>
-          <div className="perfectCentered">
-            <Button onClick={recargar} variant="contained">
-              Recharge
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
+          )}
+        />
+        <Button type="submit" variant="contained" color="primary" fullWidth>
+          Recharge
+        </Button>
+      </form>
+    </MainLayout>
   );
 }
 

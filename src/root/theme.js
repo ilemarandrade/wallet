@@ -13,6 +13,10 @@ const customTheme = createTheme({
     MuiTextField: {
       root: {
         marginBottom: 16,
+      },
+    },
+    MuiInputBase: {
+      input: {
         background: "white",
       },
     },

@@ -1,83 +1,78 @@
-import React, { useState } from "react";
-import { Route, useHistory } from "react-router-dom";
+import { ButtonBase, Grid, IconButton } from "@material-ui/core";
+import React from "react";
+import { Route, useHistory, useLocation } from "react-router-dom";
+import styled from "styled-components";
+import routes from "../constants/routes";
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 
+const ContainerButtons = styled(Grid)`
+  position: relative;
+  top: -40px;
+  justify-content: space-between;
+`;
+
+const ButtonStyles = styled.div`
+  background: #1ab187;
+  color: white;
+  width: 200px;
+  text-align: center;
+  padding: 1px 0;
+  border-radius: 5px 70px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  & p {
+    margin: 0px;
+  }
+`;
+
+const NameStyles = styled.p`
+  font-size: 0.9rem;
+  font-weight: 600;
+`;
+const CloseSessionStyles = styled(ButtonBase)`
+  text-decoration: underline;
+  color: #146f56;
+  margin: 0px;
+`;
+
+const ArrowBackStyles = styled(IconButton)(
+  ({ show }) => `
+  visibility: ${show ? "" : "hidden"};
+  & svg {
+    fill: white;
+    font-size: 2rem;
+  }
+  padding: 0px 12px;
+`
+);
 const PrivateRoute = (props) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [usuario, setUsuario] = useState("");
-  const [notDashboard, setnotDashboard] = useState(false);
   const history = useHistory();
-  React.useEffect(() => {
-    history.location.pathname === "/dashboard"
-      ? setnotDashboard(false)
-      : setnotDashboard(true);
-    if (JSON.parse(localStorage.getItem("userLogin")) === null) {
-      setTimeout(() => {
-        history.push("/");
-      }, 5000);
-    } else {
-      setIsLoading(false);
-      setUsuario(
-        JSON.parse(localStorage.getItem("userLogin"))[0]["userOnline"]
-      );
-    }
-  }, [history.location.pathname]);
+  const { pathname } = useLocation();
+  const notDashboard = pathname !== routes.DASHBOARD;
   const cerrarSesion = () => {
     history.push("/");
-    localStorage.removeItem("userLogin");
   };
   const backToDashboard = () => {
     history.push("/dashboard");
   };
-
   return (
-    <>
-      {isLoading ? null : ( // <div style={{ color: "white" }}>Cargando...</div>
-        <Route {...props}>
-          <div style={{ display: "flex" }}>
-            <div style={stylesOfuserActived}>
-              User: {usuario} <br></br>
-              <p onClick={cerrarSesion} style={pCerrarSesion}>
-                CerrarSesion
-              </p>
-            </div>
-            <div
-              onClick={backToDashboard}
-              style={{
-                ...stylesOfBackDashboard,
-                display: notDashboard ? "" : "none",
-              }}
-            >
-              <p onClick={backToDashboard}>Volver a Dashboard</p>
-            </div>
-          </div>
-          {props.children}
-        </Route>
-      )}
-    </>
+    <Route {...props}>
+      <ContainerButtons container>
+        <ArrowBackStyles show={notDashboard} onClick={backToDashboard}>
+          <KeyboardBackspaceIcon size="large" />
+        </ArrowBackStyles>
+        <ButtonStyles>
+          <NameStyles>User: Ilemar Andrade</NameStyles>
+          <CloseSessionStyles onClick={cerrarSesion}>
+            Cerrar Sesion
+          </CloseSessionStyles>
+        </ButtonStyles>
+      </ContainerButtons>
+      {props.children}
+    </Route>
   );
-};
-
-const stylesOfuserActived = {
-  background: "#1ab187",
-  color: "white",
-  width: "200px",
-  textAlign: "center",
-  padding: "1px 0",
-  borderRadius: "5px 70px",
-};
-const stylesOfBackDashboard = {
-  background: "#1ab187",
-  color: "white",
-  width: "200px",
-  textAlign: "center",
-  padding: "1px 0",
-  borderRadius: "5px 70px",
-  marginTop: "1px",
-};
-const pCerrarSesion = {
-  textDecoration: "underline",
-  color: "#146f56",
-  margin: "0px",
 };
 
 export default PrivateRoute;

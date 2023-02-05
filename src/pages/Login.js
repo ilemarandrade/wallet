@@ -1,72 +1,76 @@
-import React, { useState } from "react";
+import React from "react";
 import TextField from "@material-ui/core/TextField";
 import { useHistory } from "react-router-dom";
 import { Box, Button } from "@material-ui/core";
+import instance from "../utils/axiosInstance";
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import yup from "../utils/validation";
+import useLogin from "../hook/api/useLogin";
+import { setLocalStorageKey } from "../utils/localstoragesKeys";
+import routes from "../constants/routes";
+
+const Schema = yup.object().shape({
+  email: yup.string().email().required("Es requerido"),
+  password: yup.string().required("Es requerido"),
+});
 
 function Login() {
   let history = useHistory();
-  const [valueDocumento, setvalueDocumento] = useState("");
-  const [valueEmail, setvalueEmail] = useState("");
-  const loginComplete = () => {
-    let dataUsuarios = JSON.parse(localStorage.getItem("user")).filter(
-      (user) => user.documento === valueDocumento
+  const { handleSubmit, control } = useForm({
+    defaultValues: { email: "", password: "" },
+    resolver: yupResolver(Schema),
+  });
+  const { mutate } = useLogin();
+  const loginComplete = async (values) => {
+    mutate(
+      { ...values },
+      {
+        onSuccess: (data) => {
+          setLocalStorageKey(data.jwt);
+          history.push(routes.DASHBOARD);
+        },
+      }
     );
-    if (valueDocumento === "" || valueEmail === "") {
-      alert("Faltan Datos");
-      return;
-    } else if (dataUsuarios.length === 0) {
-      alert("Los datos ingresados no coinciden o no esta registrado");
-      return;
-    } else if (dataUsuarios[0]["email"] === valueEmail) {
-      history.push("/dashboard");
-      localStorage.setItem(
-        "userLogin",
-        JSON.stringify([
-          { userLogiado: true, userOnline: dataUsuarios[0]["nombres"] },
-        ])
-      );
-    } else {
-      alert("No coincide el documento con el email");
-    }
   };
-
-  const handlerDocumento = (e) => {
-    setvalueDocumento(e.target.value);
-  };
-  const handlerEmail = (e) => {
-    setvalueEmail(e.target.value);
-  };
-
   return (
     <div>
       <h2 style={{ textAlign: "center", color: "white" }}>Login</h2>
-      <Box sx={{ mb: 1 }}>
-        <div>
-          <TextField
-            onChange={handlerDocumento}
-            label="Documento"
-            variant="filled"
-            fullWidth
-          />
-        </div>
-        <div>
-          <TextField
-            onChange={handlerEmail}
-            label="Email"
-            variant="filled"
-            fullWidth
-          />
-        </div>
-      </Box>
-      <Button
-        onClick={loginComplete}
-        variant="contained"
-        color="primary"
-        fullWidth
-        sx={{}}
-      >
-        Entrar
-      </Button>
+      <form component="form" onSubmit={handleSubmit(loginComplete)}>
+        <Controller
+          control={control}
+          name="email"
+          render={({ field, fieldState }) => (
+            <TextField
+              {...{ ...field }}
+              error={fieldState.error}
+              helperText={fieldState?.error?.message}
+              variant="filled"
+              label="Email"
+              fullWidth
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="password"
+          render={({ field, fieldState }) => (
+            <TextField
+              {...{ ...field }}
+              error={fieldState.error}
+              helperText={fieldState?.error?.message}
+              variant="filled"
+              label="Password"
+              fullWidth
+            />
+          )}
+        />
+        <Box sx={{ mt: 1 }}>
+          <Button variant="contained" color="primary" fullWidth type="submit">
+            Iniciar Sesion
+          </Button>
+        </Box>
+      </form>
     </div>
   );
 }

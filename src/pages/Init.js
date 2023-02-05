@@ -1,22 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Register from "./Register.js";
 import Login from "./Login.js";
 import styled from "styled-components";
-import { Box, ButtonBase, Typography } from "@material-ui/core";
-
-const ContainerForm = styled.div`
-  ${({ theme }) => `
-    min-width: 365px;
-    background: #24303c;
-    padding: 5vh;
-    width: 20vw;
-    margin-top: 24px;
-    ${theme.breakpoints.down("xs")}{
-      min-width: 96vw;
-      margin: auto;
-    }
-  `}
-`;
+import { ButtonBase } from "@material-ui/core";
+import { Switch, Route, Link, useLocation, useHistory } from "react-router-dom";
+import routes from "../constants/routes.js";
+import MainLayout from "../layout/MainLayout";
 
 const SignInSignInButtons = styled.div`
   display: flex;
@@ -25,7 +14,7 @@ const SignInSignInButtons = styled.div`
 
 const ButtonStyles = styled(ButtonBase)`
   ${({ isActive }) => `
-      background: ${isActive ? "#1ab187" : "#435258"};
+      background-color: ${isActive ? "#1ab187" : "#435258"};
       height: 100%;
       width: 50%;
       color: ${isActive ? "white" : "#b1b1b1"};
@@ -34,41 +23,42 @@ const ButtonStyles = styled(ButtonBase)`
 `;
 
 function RegisterOrLogin() {
-  const [typeProcess, setTypeProcess] = useState(true);
-  const form = !typeProcess ? <Register /> : <Login />;
-  const handlerTypeProcess = () => setTypeProcess(!typeProcess);
-
+  const { pathname } = useLocation();
+  const history = useHistory();
+  useEffect(() => {
+    if (pathname === routes.INIT) {
+      history.push(routes.LOGIN);
+    }
+  }, []);
   return (
-    <Box
-      sx={{
-        flexDirection: "column",
-        "& h1": { color: "white", fontWeight: 600 },
-      }}
-      className="perfectCentered"
-    >
-      <Typography variant="h4" component="h1">
-        Billetera
-      </Typography>
-      <ContainerForm>
-        <SignInSignInButtons>
-          <ButtonStyles
-            className="perfectCentered"
-            onClick={handlerTypeProcess}
-            isActive={!typeProcess}
-          >
-            Sign up
-          </ButtonStyles>
-          <ButtonStyles
-            className="perfectCentered"
-            onClick={handlerTypeProcess}
-            isActive={typeProcess}
-          >
-            Login
-          </ButtonStyles>
-        </SignInSignInButtons>
-        <div>{form}</div>
-      </ContainerForm>
-    </Box>
+    <MainLayout title="Billetera">
+      <SignInSignInButtons>
+        <ButtonStyles
+          className="perfectCentered"
+          isActive={pathname === routes.SIGNUP}
+          component={Link}
+          to={routes.SIGNUP}
+        >
+          Sign up
+        </ButtonStyles>
+        <ButtonStyles
+          className="perfectCentered"
+          isActive={pathname === routes.LOGIN}
+          component={Link}
+          to={routes.LOGIN}
+        >
+          Login
+        </ButtonStyles>
+      </SignInSignInButtons>
+      <Switch>
+        <Route path={routes.SIGNUP}>
+          <Register />
+        </Route>
+        <Route path={routes.LOGIN}>
+          <Login />
+        </Route>
+      </Switch>
+    </MainLayout>
   );
 }
 export default RegisterOrLogin;
