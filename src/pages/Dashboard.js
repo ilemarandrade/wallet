@@ -18,6 +18,9 @@ function Dashboard() {
   const goPagar = () => {
     history.push(routes.PAY);
   };
+  const goMovements = () => {
+    history.push(routes.MOVEMENTS);
+  };
   const goConsulta = () => {
     toast.success(`Tu saldo disponible es: $${data?.available_balance}`);
   };
@@ -39,13 +42,23 @@ function Dashboard() {
           Pagar
         </Button>
       </Box>
+      <Box sx={{ mb: 2 }}>
+        <Button
+          onClick={goConsulta}
+          variant="contained"
+          color="primary"
+          fullWidth
+        >
+          Consultar Saldo
+        </Button>
+      </Box>
       <Button
-        onClick={goConsulta}
+        onClick={goMovements}
         variant="contained"
         color="primary"
         fullWidth
       >
-        Consultar Saldo
+        Movimientos de Cuenta
       </Button>
     </MainLayout>
   );

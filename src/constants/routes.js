@@ -6,4 +6,5 @@ export default {
   PAY: "/dashboard/pay",
   RECHARGE: "/dashboard/recharge",
   BALANCEINQUIRY: "/dashboard/balance_inquiry",
+  MOVEMENTS: "/dashboard/movements",
 };

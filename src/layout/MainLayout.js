@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { Box, Typography } from "@material-ui/core";
+import { useLocation } from "react-router-dom";
+import routes from "../constants/routes";
 
 export const ContainerMain = styled.div`
-  ${({ theme }) => `
+  ${({ theme, fullWidth }) => `
     min-width: 365px;
     background: #24303c;
     padding: 5vh;
-    width: 20vw;
+    width: ${fullWidth ? "75vw" : "20vw"};
     margin-top: 24px;
     ${theme.breakpoints.down("xs")}{
       min-width: 90vw;
@@ -17,6 +19,8 @@ export const ContainerMain = styled.div`
 `;
 
 function MainLayout({ title, children }) {
+  const { pathname } = useLocation();
+
   return (
     <Box
       sx={{
@@ -28,7 +32,9 @@ function MainLayout({ title, children }) {
       <Typography variant="h4" component="h1">
         {title}
       </Typography>
-      <ContainerMain>{children}</ContainerMain>
+      <ContainerMain fullWidth={pathname === routes.MOVEMENTS}>
+        {children}
+      </ContainerMain>
     </Box>
   );
 }
