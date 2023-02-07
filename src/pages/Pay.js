@@ -5,20 +5,35 @@ import { Button } from "@material-ui/core";
 import MainLayout from "../layout/MainLayout";
 import { Controller, useForm } from "react-hook-form";
 import usePay from "../hook/api/usePay";
+import yup from "../utils/validation";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-hot-toast";
+import routes from "../constants/routes";
+import TextFieldPassword from "../components/TextFieldPassword";
+
+const Schema = yup.object().shape({
+  amount: yup.number().required(),
+  concept: yup.string().required(),
+  password: yup.string().required(),
+});
 
 function Pay() {
   let history = useHistory();
   const { mutate } = usePay();
-  const { handleSubmit, control } = useForm({
-    defaultValues: { email: "", password: "" },
-    // resolver: yupResolver(Schema),
+  const { handleSubmit, control, reset } = useForm({
+    resolver: yupResolver(Schema),
   });
   const onSubmit = (values) => {
     mutate(
       { ...values },
       {
         onSuccess: () => {
-          alert("Exitoso");
+          reset();
+          toast.success("Pago completado exitosamente");
+          history.push(routes.DASHBOARD);
+        },
+        onError: ({ message }) => {
+          toast.error(message || "Ha ocurrido un error");
         },
       }
     );
@@ -58,7 +73,7 @@ function Pay() {
           control={control}
           name="password"
           render={({ field, fieldState }) => (
-            <TextField
+            <TextFieldPassword
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}

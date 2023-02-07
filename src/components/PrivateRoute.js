@@ -1,9 +1,10 @@
 import { ButtonBase, Grid, IconButton } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import routes from "../constants/routes";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+import { useStateUser } from "../providers/UserProvider";
 
 const ContainerButtons = styled(Grid)`
   position: relative;
@@ -48,15 +49,22 @@ const ArrowBackStyles = styled(IconButton)(
 `
 );
 const PrivateRoute = (props) => {
+  const { logout, isLogged } = useStateUser();
   const history = useHistory();
   const { pathname } = useLocation();
   const notDashboard = pathname !== routes.DASHBOARD;
-  const cerrarSesion = () => {
-    history.push("/");
-  };
   const backToDashboard = () => {
     history.push("/dashboard");
   };
+  useEffect(() => {
+    if (!isLogged) {
+      history.push(routes.LOGIN);
+    }
+  }, [history, isLogged]);
+
+  if (!isLogged) {
+    return null;
+  }
   return (
     <Route {...props}>
       <ContainerButtons container>
@@ -65,7 +73,7 @@ const PrivateRoute = (props) => {
         </ArrowBackStyles>
         <ButtonStyles>
           <NameStyles>User: Ilemar Andrade</NameStyles>
-          <CloseSessionStyles onClick={cerrarSesion}>
+          <CloseSessionStyles onClick={logout}>
             Cerrar Sesion
           </CloseSessionStyles>
         </ButtonStyles>

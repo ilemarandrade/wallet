@@ -16,8 +16,16 @@ const customTheme = createTheme({
       },
     },
     MuiInputBase: {
-      input: {
-        background: "white",
+      root: {
+        backgroundColor: "white",
+      },
+    },
+    MuiFilledInput: {
+      root: {
+        backgroundColor: "white",
+        "&.Mui-focused, &:hover": {
+          backgroundColor: "white",
+        },
       },
     },
   },

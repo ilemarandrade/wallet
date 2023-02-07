@@ -5,6 +5,9 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import yup from "../utils/validation";
 import useRegisterUser from "../hook/api/useRegisterUser";
+import { toast } from "react-hot-toast";
+import { useHistory } from "react-router-dom";
+import routes from "../constants/routes";
 
 const Schema = yup.object().shape({
   name: yup.string().required(),
@@ -19,7 +22,8 @@ const Schema = yup.object().shape({
     .oneOf([yup.ref("password"), ""], "Las contraseñas no coinciden"),
 });
 function Register() {
-  const { handleSubmit, control } = useForm({
+  const history = useHistory();
+  const { handleSubmit, control, reset } = useForm({
     defaultValues: { email: "", password: "" },
     resolver: yupResolver(Schema),
   });
@@ -27,7 +31,12 @@ function Register() {
   const onSubmit = (values) => {
     mutate(values, {
       onSuccess: () => {
-        console.log("exitoso");
+        reset();
+        toast.success("Registro completado exitosamente");
+        history.push(routes.LOGIN);
+      },
+      onError: ({ message }) => {
+        toast.error(message || "Ha ocurrido un error");
       },
     });
   };

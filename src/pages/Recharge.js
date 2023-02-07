@@ -5,12 +5,22 @@ import { Button } from "@material-ui/core";
 import MainLayout from "../layout/MainLayout";
 import { Controller, useForm } from "react-hook-form";
 import useRecharge from "../hook/api/useRecharge";
+import { yupResolver } from "@hookform/resolvers/yup";
+import TextFieldPassword from "../components/TextFieldPassword";
+import yup from "../utils/validation";
+import { toast } from "react-hot-toast";
+import routes from "../constants/routes";
+
+const Schema = yup.object().shape({
+  amount: yup.number().required(),
+  concept: yup.string().required(),
+  password: yup.string().required(),
+});
 
 function Recharge() {
   const { mutate } = useRecharge();
-  const { handleSubmit, control } = useForm({
-    defaultValues: { email: "", password: "" },
-    // resolver: yupResolver(Schema),
+  const { handleSubmit, control, reset } = useForm({
+    resolver: yupResolver(Schema),
   });
 
   let history = useHistory();
@@ -19,7 +29,12 @@ function Recharge() {
       { ...values },
       {
         onSuccess: (data) => {
-          console.log(data);
+          reset();
+          toast.success("Recarga completada exitosamente");
+          history.push(routes.DASHBOARD);
+        },
+        onError: ({ message }) => {
+          toast.error(message || "Ha ocurrido un error");
         },
       }
     );
@@ -59,7 +74,7 @@ function Recharge() {
           control={control}
           name="password"
           render={({ field, fieldState }) => (
-            <TextField
+            <TextFieldPassword
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
