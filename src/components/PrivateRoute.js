@@ -10,6 +10,9 @@ const ContainerButtons = styled(Grid)`
   position: relative;
   top: -40px;
   justify-content: space-between;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    top: -9vh;
+  }
 `;
 
 const ButtonStyles = styled.div`
@@ -49,7 +52,7 @@ const ArrowBackStyles = styled(IconButton)(
 `
 );
 const PrivateRoute = (props) => {
-  const { logout, isLogged } = useStateUser();
+  const { logout, isLogged, profile } = useStateUser();
   const history = useHistory();
   const { pathname } = useLocation();
   const notDashboard = pathname !== routes.DASHBOARD;
@@ -72,7 +75,7 @@ const PrivateRoute = (props) => {
           <KeyboardBackspaceIcon size="large" />
         </ArrowBackStyles>
         <ButtonStyles>
-          <NameStyles>User: Ilemar Andrade</NameStyles>
+          <NameStyles>{`User: ${profile.name}`} </NameStyles>
           <CloseSessionStyles onClick={logout}>
             Cerrar Sesion
           </CloseSessionStyles>

@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 function Dashboard() {
   let history = useHistory();
   const { data } = useCheckBalance({
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnWindowFocus: false,
   });
   const goRecarga = () => {

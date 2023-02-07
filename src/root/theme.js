@@ -24,7 +24,7 @@ const customTheme = createTheme({
       root: {
         backgroundColor: "white",
         "&.Mui-focused, &:hover": {
-          backgroundColor: "white",
+          backgroundColor: "white !important",
         },
       },
     },

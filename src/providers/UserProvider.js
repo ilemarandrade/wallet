@@ -26,6 +26,7 @@ const UserProvider = ({ children }) => {
   const history = useHistory();
   const [isFetchedProfile, setFetchedProfile] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
+  const [profile, setProfile] = useState({});
   const queryClient = useQueryClient();
   const [requestTokenVerification, setRequestTokenVerification] =
     useState(false);
@@ -57,8 +58,9 @@ const UserProvider = ({ children }) => {
     enabled: requestTokenVerification,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    onSuccess: () => {
+    onSuccess: (data) => {
       setIsLogged(true);
+      setProfile(data.user);
       history.push(routes.DASHBOARD);
     },
     onError: () => {
@@ -78,7 +80,7 @@ const UserProvider = ({ children }) => {
   }, [requestTokenVerification]);
 
   return (
-    <UserContext.Provider value={{ isLogged, logout, login }}>
+    <UserContext.Provider value={{ isLogged, logout, login, profile }}>
       {isFetchedProfile ? children : <Loading open />}
     </UserContext.Provider>
   );

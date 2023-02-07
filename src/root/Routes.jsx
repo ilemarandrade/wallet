@@ -14,6 +14,19 @@ import PrivateRoute from "../components/PrivateRoute";
 import { Box } from "@material-ui/core";
 import Loading from "../components/Loading";
 import { useIsFetching, useIsMutating } from "@tanstack/react-query";
+import styled from "styled-components";
+const Container = styled.div`
+  ${({ theme }) => `
+  min-height: calc(100vh - 72px);
+  margin-bottom: 48px;
+  padding: 48px 0px;
+
+  ${theme.breakpoints.down("sm")}{
+    padding-top: 10vh;
+  }
+
+`}
+`;
 
 export const privateRoutes = [
   {
@@ -33,7 +46,7 @@ const Routes = () => {
   const isFetching = useIsFetching();
   const isMutating = useIsMutating();
   return (
-    <Box sx={{ minHeight: "calc(100vh - 72px)", mb: 6, paddingY: 6 }}>
+    <Container sx={{ minHeight: "calc(100vh - 72px)", mb: 6, paddingY: 6 }}>
       <Loading open={isFetching || isMutating} />
       <Switch>
         {privateRoutes.map(({ path, Component }) => (
@@ -46,7 +59,7 @@ const Routes = () => {
         </Route>
         <Redirect to={routes.INIT} />
       </Switch>
-    </Box>
+    </Container>
   );
 };
 
