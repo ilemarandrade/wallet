@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom";
 import routes from "../constants/routes";
 import { useTranslation } from "react-i18next";
-import { t } from "../utils/traductions/i18n";
+import i18n from "../utils/traductions/i18n";
 
 const Schema = yup.object().shape({
   name: yup.string().required(),
@@ -20,10 +20,10 @@ const Schema = yup.object().shape({
   password: yup.string().required(),
   confirmation_password: yup
     .string()
-    .required(t("validation_message.confirmation_password"))
+    .required(i18n.t("validation_message.confirmation_password"))
     .oneOf(
       [yup.ref("password"), ""],
-      t("validation_message.confirmation_password")
+      i18n.t("validation_message.confirmation_password")
     ),
 });
 function Register() {
