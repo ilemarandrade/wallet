@@ -30,7 +30,8 @@
     "recharge_success": "Ingreso guardado exitosamente",
     "register_success": "Registro completado exitosamente",
     "welcome": "Bienvenido!",
-    "logout_success": "Sesión Cerrada exitosamente!"
+    "logout_success": "Sesión Cerrada exitosamente!",
+    "whithout_movements": "Aún no posees ningún movimiento en tu billetera"
   },
   "validation_message": {
     "required": "*Este campo es requerido",

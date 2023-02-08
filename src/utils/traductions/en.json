@@ -30,7 +30,8 @@
     "recharge_success": "Income saved successfully",
     "register_success": "Register completed successfully",
     "welcome": "Welcome!",
-    "logout_success": "Logout success!"
+    "logout_success": "Logout success!",
+    "whithout_movements": "You still do not have any movement in your wallet"
   },
   "validation_message": {
     "required": "*This field is required",
