@@ -35,7 +35,8 @@
   "validation_message": {
     "required": "*This field is required",
     "email": "*Must be a valid email format",
-    "confirmation_password": "*Password confirmation is required"
+    "confirmation_password": "*Password confirmation is required",
+    "passwords_not_same": "*Passwords do not match"
   },
   "logout": "Logout",
   "footer": "Created by Software Developer Ilemar Andrade",
