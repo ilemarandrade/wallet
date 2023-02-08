@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import routes from "../constants/routes";
 import { useTranslation } from "react-i18next";
 import i18n from "../utils/traductions/i18n";
+import TextFieldPassword from "../components/TextFieldPassword";
 
 const Schema = yup.object().shape({
   name: yup.string().required(),
@@ -17,13 +18,13 @@ const Schema = yup.object().shape({
   document: yup.string().required(),
   phone: yup.string().required(),
   email: yup.string().email().required(),
-  password: yup.string().required(),
+  password: yup.string().password().required(),
   confirmation_password: yup
     .string()
     .required(i18n.t("validation_message.confirmation_password"))
     .oneOf(
       [yup.ref("password"), ""],
-      i18n.t("validation_message.confirmation_password")
+      i18n.t("validation_message.passwords_not_same")
     ),
 });
 function Register() {
@@ -127,7 +128,7 @@ function Register() {
           control={control}
           name="password"
           render={({ field, fieldState }) => (
-            <TextField
+            <TextFieldPassword
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
@@ -141,7 +142,7 @@ function Register() {
           control={control}
           name="confirmation_password"
           render={({ field, fieldState }) => (
-            <TextField
+            <TextFieldPassword
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}

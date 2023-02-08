@@ -36,7 +36,13 @@
     "required": "*Este campo es requerido",
     "email": "*Debe ser un formato de email válido",
     "confirmation_password": "*La confirmación de contraseña es requerida",
-    "passwords_not_same": "*Las contraseñas no coinciden"
+    "passwords_not_same": "*Las contraseñas no coinciden",
+    "should_have_lowercase": "Debe poseer un carácter con minúscula",
+    "should_have_uppercase": "Debe poseer un carácter con mayúscula",
+    "should_have_number": "Debe poseer un número",
+    "should_have_special_character": "Debe poseer un carácter especial",
+    "min_characters": "El mínimo número de caracteres es de {{number}} dígitos",
+    "max_characters": "El maximo número de caracteres es de {{number}} dígitos"
   },
   "logout": "Cerrar Sesión",
   "footer": "Creado por el Desarrollador de Software Ilemar Andrade",
