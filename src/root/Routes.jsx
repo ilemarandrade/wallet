@@ -10,11 +10,13 @@ import PrivateRoute from "../components/PrivateRoute";
 import Loading from "../components/Loading";
 import { useIsFetching, useIsMutating } from "@tanstack/react-query";
 import styled from "styled-components";
+import Language from "../components/Language";
 const Container = styled.div`
   ${({ theme }) => `
   min-height: calc(100vh - 72px);
   margin-bottom: 48px;
   padding: 48px 0px;
+  position: relative;
 
   ${theme.breakpoints.down("sm")}{
     padding-top: 10vh;
@@ -23,6 +25,11 @@ const Container = styled.div`
 `}
 `;
 
+const LanguageStyles = styled(Language)`
+  position: absolute;
+  top: 0px;
+  right: 10px;
+`;
 export const privateRoutes = [
   {
     Component: Dashboard,
@@ -46,6 +53,7 @@ const Routes = () => {
   const isMutating = useIsMutating();
   return (
     <Container sx={{ minHeight: "calc(100vh - 72px)", mb: 6, paddingY: 6 }}>
+      <LanguageStyles />
       <Loading open={isFetching || isMutating} />
       <Switch>
         {privateRoutes.map(({ path, Component }) => (

@@ -6,9 +6,9 @@ import usa from "../assets/usa.png";
 import styled from "styled-components";
 
 const FlagStyles = styled.img`
-  width: 40px;
+  width: 30px;
 `;
-const Language = () => {
+const Language = ({ className }) => {
   const {
     i18n: { language, changeLanguage },
   } = useTranslation();
@@ -17,8 +17,8 @@ const Language = () => {
     changeLanguage(isEnglish ? "es" : "en");
   };
   return (
-    <IconButton onClick={changeLanguagePage}>
-      <FlagStyles src={isEnglish ? usa : spain} alt="flag" />
+    <IconButton onClick={changeLanguagePage} className={className}>
+      <FlagStyles src={!isEnglish ? usa : spain} alt="flag" />
     </IconButton>
   );
 };
