@@ -60,7 +60,7 @@ const UserProvider = ({ children }) => {
           setLocalStorageKey(data.jwt);
           toast.success(t("toast_message.welcome"));
           setIsLogged(true);
-          queryClient.refetchQueries({ queryKey: ["get_user_information"] });
+          setRequestTokenVerification(true);
           history.push(routes.DASHBOARD);
         },
         onError: ({ message }) => {
@@ -72,6 +72,7 @@ const UserProvider = ({ children }) => {
   const logout = () => {
     removeLocalStorageKey();
     queryClient.clear();
+    setRequestTokenVerification(false);
     history.push(routes.LOGIN);
     toast.success(t("toast_message.logout_success"));
   };
