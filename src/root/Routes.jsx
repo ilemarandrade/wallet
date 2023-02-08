@@ -54,10 +54,10 @@ const Routes = () => {
   return (
     <Container sx={{ minHeight: "calc(100vh - 72px)", mb: 6, paddingY: 6 }}>
       <LanguageStyles />
-      <Loading open={isFetching || isMutating} />
+      <Loading open={!!isFetching || !!isMutating} />
       <Switch>
         {privateRoutes.map(({ path, Component }) => (
-          <PrivateRoute exact path={path}>
+          <PrivateRoute exact path={path} key={path}>
             <Component />
           </PrivateRoute>
         ))}

@@ -12,6 +12,7 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import useLogin from "../hook/api/useLogin";
 import { useTranslation } from "react-i18next";
+import { userLanguage } from "../utils/traductions/i18n";
 
 export const UserContext = createContext();
 
@@ -24,7 +25,11 @@ export const useStateUser = () => {
 };
 
 const UserProvider = ({ children }) => {
-  const { t } = useTranslation();
+  const {
+    t,
+    i18n: { changeLanguage },
+  } = useTranslation();
+  const lang = userLanguage();
   const history = useHistory();
   const [isFetchedProfile, setFetchedProfile] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
@@ -69,6 +74,7 @@ const UserProvider = ({ children }) => {
       }
     );
   };
+
   const logout = () => {
     removeLocalStorageKey();
     queryClient.clear();
@@ -78,16 +84,21 @@ const UserProvider = ({ children }) => {
   };
 
   const token = getLocalStorageKey();
+
   useEffect(() => {
     if (token) {
       setRequestTokenVerification(true);
     } else {
       setFetchedProfile(true);
     }
-  }, [requestTokenVerification]);
+  }, [requestTokenVerification, token]);
+
+  useEffect(() => {
+    changeLanguage(lang);
+  }, []);
 
   return (
-    <UserContext.Provider value={{ isLogged, logout, login, profile }}>
+    <UserContext.Provider value={{ isLogged, logout, login, profile, lang }}>
       {isFetchedProfile ? children : <Loading open />}
     </UserContext.Provider>
   );
