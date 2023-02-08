@@ -56,6 +56,7 @@ const useStyles = makeStyles({
   },
   container: {
     maxHeight: 440,
+    minHeight: "calc(500px - 50px)",
   },
   pagination: {
     position: "absolute",
