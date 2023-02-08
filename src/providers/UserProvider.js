@@ -11,6 +11,7 @@ import {
 } from "../utils/localstoragesKeys";
 import { useQueryClient } from "@tanstack/react-query";
 import useLogin from "../hook/api/useLogin";
+import { useTranslation } from "react-i18next";
 
 export const UserContext = createContext();
 
@@ -23,6 +24,7 @@ export const useStateUser = () => {
 };
 
 const UserProvider = ({ children }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const [isFetchedProfile, setFetchedProfile] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
@@ -32,28 +34,7 @@ const UserProvider = ({ children }) => {
     useState(false);
 
   const { mutate } = useLogin();
-  const login = async (values) => {
-    mutate(
-      { ...values },
-      {
-        onSuccess: (data) => {
-          setLocalStorageKey(data.jwt);
-          toast.success("Bienvenido!");
-          setIsLogged(true);
-          history.push(routes.DASHBOARD);
-        },
-        onError: ({ message }) => {
-          toast.error(message || "Ha ocurrido un error");
-        },
-      }
-    );
-  };
-  const logout = () => {
-    removeLocalStorageKey();
-    queryClient.clear();
-    history.push(routes.LOGIN);
-    toast.success("Logout exitoso!");
-  };
+
   useGetUserInformation({
     enabled: requestTokenVerification,
     refetchOnMount: false,
@@ -70,6 +51,31 @@ const UserProvider = ({ children }) => {
       setFetchedProfile(true);
     },
   });
+
+  const login = async (values) => {
+    mutate(
+      { ...values },
+      {
+        onSuccess: (data) => {
+          setLocalStorageKey(data.jwt);
+          toast.success(t("toast_message.welcome"));
+          setIsLogged(true);
+          queryClient.refetchQueries({ queryKey: ["get_user_information"] });
+          history.push(routes.DASHBOARD);
+        },
+        onError: ({ message }) => {
+          toast.error(message || `${t("toast_message.there_is_error")}`);
+        },
+      }
+    );
+  };
+  const logout = () => {
+    removeLocalStorageKey();
+    queryClient.clear();
+    history.push(routes.LOGIN);
+    toast.success(t("toast_message.logout_success"));
+  };
+
   const token = getLocalStorageKey();
   useEffect(() => {
     if (token) {

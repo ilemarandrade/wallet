@@ -1,0 +1,49 @@
+{
+  "forms": {
+    "titles": { "login": "Login", "signup": "Registro" },
+    "labels": {
+      "email": "Email",
+      "password": "Contraseña",
+      "name": "Nombre",
+      "lastname": "Apellido",
+      "document": "Documento",
+      "phone": "Teléfono",
+      "confirmation_password": "Confirmación de Contraseña",
+      "amount": "Monto",
+      "concept": "Concepto"
+    },
+    "buttons": {
+      "register": "Registrar",
+      "login": "Iniciar Sesión"
+    }
+  },
+  "services": {
+    "recharge": "Recargar",
+    "pay": "Pagar",
+    "check_balance": "Consultar Saldo",
+    "account_movements": "Movimientos de cuenta"
+  },
+  "toast_message": {
+    "available_balance": "Tu balance es:",
+    "there_is_error": "Ha ocurrido un error",
+    "pay_success": "Pago completado exitosamente",
+    "recharge_success": "Recarga completada exitosamente",
+    "register_success": "Registro completado exitosamente",
+    "welcome": "Bienvenido!",
+    "logout_success": "Sesión Cerrada exitosamente!"
+  },
+  "validation_message": {
+    "required": "*Este campo es requerido",
+    "email": "*Debe ser un formato de email válido",
+    "confirmation_password": "*La confirmación de contraseña es requerida"
+  },
+  "logout": "Cerrar Sesión",
+  "footer": "Creado por el Desarrollador de Software Ilemar Andrade",
+  "date": "Fecha",
+  "credit_or_debit": "Débito / Crédito",
+  "remaining": "Restante",
+  "user": "Usuario",
+  "main_title": "Billetera",
+  "credit": "Credito",
+  "debit": "Debito"
+}

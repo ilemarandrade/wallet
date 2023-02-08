@@ -1,0 +1,49 @@
+{
+  "forms": {
+    "titles": { "login": "Login", "signup": "Sign up" },
+    "labels": {
+      "email": "Email",
+      "password": "Password",
+      "name": "Name",
+      "lastname": "Lastname",
+      "document": "Document",
+      "phone": "Phone",
+      "confirmation_password": "Confirmation Password",
+      "amount": "Amount",
+      "concept": "Concept"
+    },
+    "buttons": {
+      "register": "Register",
+      "login": "Log In"
+    }
+  },
+  "services": {
+    "recharge": "Recharge",
+    "pay": "Pay",
+    "check_balance": "Check Balance",
+    "account_movements": "Account Movements"
+  },
+  "toast_message": {
+    "available_balance": "Your available balance is:",
+    "there_is_error": "An error has occurred",
+    "pay_success": "Payment completed successfully",
+    "recharge_success": "Recharge completed successfully",
+    "register_success": "Register completed successfully",
+    "welcome": "Welcome!",
+    "logout_success": "Logout success!"
+  },
+  "validation_message": {
+    "required": "*This field is required",
+    "email": "*Must be a valid email format",
+    "confirmation_password": "Password confirmation is required"
+  },
+  "logout": "Logout",
+  "footer": "Created by Software Developer Ilemar Andrade",
+  "date": "Date",
+  "credit_or_debit": "Credit / Debit",
+  "remaining": "Remaining",
+  "user": "User",
+  "main_title": "Wallet",
+  "credit": "Credit",
+  "debit": "Debit"
+}

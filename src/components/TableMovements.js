@@ -10,6 +10,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import moment from "moment";
 import styled from "styled-components";
+import i18next from "../utils/traductions/i18n";
 
 const TableHeadStyles = styled(TableHead)(
   ({ theme }) => `
@@ -23,21 +24,26 @@ const TableHeadStyles = styled(TableHead)(
 );
 const columns = [
   {
-    label: "Date",
+    label: i18next.t("date"),
     id: "date",
     format: (date) => moment.unix(date).format("DD-MM-YY hh:mm"),
     minWidth: 150,
   },
-  { label: "Concept", id: "concept", minWidth: 150 },
-  { label: "Débito / Crédito", id: "type", minWidth: 150 },
+  { label: i18next.t("forms.labels.concept"), id: "concept", minWidth: 150 },
   {
-    label: "Amount",
+    label: i18next.t("credit_or_debit"),
+    id: "type",
+    minWidth: 150,
+    format: (value) => i18next.t(value),
+  },
+  {
+    label: i18next.t("forms.labels.amount"),
     id: "amount",
     format: (amount) => `$${amount}`,
     minWidth: 150,
   },
   {
-    label: "Remaining",
+    label: i18next.t("remaining"),
     id: "remaining_balance",
     format: (amount) => `$${amount}`,
   },

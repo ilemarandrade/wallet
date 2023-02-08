@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
@@ -10,6 +10,7 @@ import TextFieldPassword from "../components/TextFieldPassword";
 import yup from "../utils/validation";
 import { toast } from "react-hot-toast";
 import routes from "../constants/routes";
+import { useTranslation } from "react-i18next";
 
 const Schema = yup.object().shape({
   amount: yup.number().required(),
@@ -18,6 +19,7 @@ const Schema = yup.object().shape({
 });
 
 function Recharge() {
+  const { t } = useTranslation();
   const { mutate } = useRecharge();
   const { handleSubmit, control, reset } = useForm({
     resolver: yupResolver(Schema),
@@ -30,17 +32,17 @@ function Recharge() {
       {
         onSuccess: (data) => {
           reset();
-          toast.success("Recarga completada exitosamente");
+          toast.success(`${t("toast_message.recharge_success")}`);
           history.push(routes.DASHBOARD);
         },
         onError: ({ message }) => {
-          toast.error(message || "Ha ocurrido un error");
+          toast.error(message || `${t("toast_message.there_is_error")}`);
         },
       }
     );
   };
   return (
-    <MainLayout title="Recharge">
+    <MainLayout title={t("services.recharge")}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
@@ -50,7 +52,7 @@ function Recharge() {
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
-              label="Amount"
+              label={t("forms.labels.amount")}
               variant="filled"
               fullWidth
             />
@@ -64,7 +66,7 @@ function Recharge() {
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
-              label="Concept"
+              label={t("forms.labels.concept")}
               variant="filled"
               fullWidth
             />
@@ -78,14 +80,14 @@ function Recharge() {
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
-              label="Password"
+              label={t("forms.labels.password")}
               variant="filled"
               fullWidth
             />
           )}
         />
         <Button type="submit" variant="contained" color="primary" fullWidth>
-          Recharge
+          {t("services.recharge")}
         </Button>
       </form>
     </MainLayout>

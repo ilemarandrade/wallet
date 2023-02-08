@@ -6,6 +6,7 @@ import { ButtonBase } from "@material-ui/core";
 import { Switch, Route, Link, useLocation, useHistory } from "react-router-dom";
 import routes from "../constants/routes.js";
 import MainLayout from "../layout/MainLayout";
+import { useTranslation } from "react-i18next";
 
 const SignInSignInButtons = styled.div`
   display: flex;
@@ -25,13 +26,14 @@ const ButtonStyles = styled(ButtonBase)`
 function RegisterOrLogin() {
   const { pathname } = useLocation();
   const history = useHistory();
+  const { t } = useTranslation();
   useEffect(() => {
     if (pathname === routes.INIT) {
       history.push(routes.LOGIN);
     }
   }, []);
   return (
-    <MainLayout title="Billetera">
+    <MainLayout title={t("main_title")}>
       <SignInSignInButtons>
         <ButtonStyles
           className="perfectCentered"
@@ -39,7 +41,7 @@ function RegisterOrLogin() {
           component={Link}
           to={routes.SIGNUP}
         >
-          Sign up
+          {t("forms.titles.signup")}
         </ButtonStyles>
         <ButtonStyles
           className="perfectCentered"
@@ -47,7 +49,7 @@ function RegisterOrLogin() {
           component={Link}
           to={routes.LOGIN}
         >
-          Login
+          {t("forms.titles.login")}
         </ButtonStyles>
       </SignInSignInButtons>
       <Switch>

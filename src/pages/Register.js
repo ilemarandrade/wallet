@@ -8,6 +8,7 @@ import useRegisterUser from "../hook/api/useRegisterUser";
 import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom";
 import routes from "../constants/routes";
+import { useTranslation } from "react-i18next";
 
 const Schema = yup.object().shape({
   name: yup.string().required(),
@@ -23,6 +24,7 @@ const Schema = yup.object().shape({
 });
 function Register() {
   const history = useHistory();
+  const { t } = useTranslation();
   const { handleSubmit, control, reset } = useForm({
     defaultValues: { email: "", password: "" },
     resolver: yupResolver(Schema),
@@ -32,18 +34,20 @@ function Register() {
     mutate(values, {
       onSuccess: () => {
         reset();
-        toast.success("Registro completado exitosamente");
+        toast.success(`${t("toast_message.register_success")}`);
         history.push(routes.LOGIN);
       },
       onError: ({ message }) => {
-        toast.error(message || "Ha ocurrido un error");
+        toast.error(message || `${t("toast_message.there_is_error")}`);
       },
     });
   };
 
   return (
     <div>
-      <h2 style={{ textAlign: "center", color: "white" }}>Sign up</h2>
+      <h2 style={{ textAlign: "center", color: "white" }}>
+        {t("forms.titles.signup")}
+      </h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
@@ -53,7 +57,7 @@ function Register() {
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
-              label="Nombre"
+              label={t("forms.labels.name")}
               variant="filled"
               fullWidth
             />
@@ -67,7 +71,7 @@ function Register() {
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
-              label="Apellido"
+              label={t("forms.labels.lastname")}
               variant="filled"
               fullWidth
             />
@@ -81,7 +85,7 @@ function Register() {
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
-              label="Email"
+              label={t("forms.labels.email")}
               variant="filled"
               fullWidth
             />
@@ -95,7 +99,7 @@ function Register() {
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
-              label="Documento"
+              label={t("forms.labels.document")}
               variant="filled"
               fullWidth
             />
@@ -109,7 +113,7 @@ function Register() {
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
-              label="Telefono"
+              label={t("forms.labels.phone")}
               variant="filled"
               fullWidth
             />
@@ -123,7 +127,7 @@ function Register() {
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
-              label="Password"
+              label={t("forms.labels.password")}
               variant="filled"
               fullWidth
             />
@@ -137,7 +141,7 @@ function Register() {
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
-              label="Confirmation password"
+              label={t("forms.labels.confirmation_password")}
               variant="filled"
               fullWidth
             />
@@ -145,7 +149,7 @@ function Register() {
         />
         <div className="perfectCentered">
           <Button type="submit" variant="contained" color="primary" fullWidth>
-            Registrar
+            {t("forms.buttons.register")}
           </Button>
         </div>
       </form>

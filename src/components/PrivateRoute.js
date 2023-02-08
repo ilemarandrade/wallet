@@ -1,10 +1,12 @@
-import { ButtonBase, Grid, IconButton } from "@material-ui/core";
+import { Box, ButtonBase, Grid, IconButton } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { Route, useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import routes from "../constants/routes";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import { useStateUser } from "../providers/UserProvider";
+import { useTranslation } from "react-i18next";
+import Language from "./Language";
 
 const ContainerButtons = styled(Grid)`
   position: relative;
@@ -56,6 +58,7 @@ const PrivateRoute = (props) => {
   const history = useHistory();
   const { pathname } = useLocation();
   const notDashboard = pathname !== routes.DASHBOARD;
+  const { t } = useTranslation();
   const backToDashboard = () => {
     history.push("/dashboard");
   };
@@ -74,12 +77,15 @@ const PrivateRoute = (props) => {
         <ArrowBackStyles show={notDashboard} onClick={backToDashboard}>
           <KeyboardBackspaceIcon size="large" />
         </ArrowBackStyles>
-        <ButtonStyles>
-          <NameStyles>{`User: ${profile.name}`} </NameStyles>
-          <CloseSessionStyles onClick={logout}>
-            Cerrar Sesion
-          </CloseSessionStyles>
-        </ButtonStyles>
+        <Box sx={{ display: "flex" }}>
+          <Language />
+          <ButtonStyles>
+            <NameStyles>{`${t("user")}: ${profile.name}`} </NameStyles>
+            <CloseSessionStyles onClick={logout}>
+              {t("logout").toUpperCase()}
+            </CloseSessionStyles>
+          </ButtonStyles>
+        </Box>
       </ContainerButtons>
       {props.children}
     </Route>

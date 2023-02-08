@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./root/App";
 import * as serviceWorker from "./serviceWorker";
+import "./utils/traductions/i18n";
 
 ReactDOM.render(
   <React.StrictMode>

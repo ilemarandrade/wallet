@@ -5,9 +5,11 @@ import MainLayout from "../layout/MainLayout";
 import routes from "../constants/routes";
 import useCheckBalance from "../hook/api/useCheckBalance";
 import { toast } from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 function Dashboard() {
   let history = useHistory();
+  const { t } = useTranslation();
   const { data } = useCheckBalance({
     refetchOnMount: true,
     refetchOnWindowFocus: false,
@@ -22,7 +24,9 @@ function Dashboard() {
     history.push(routes.MOVEMENTS);
   };
   const goConsulta = () => {
-    toast.success(`Tu saldo disponible es: $${data?.available_balance}`);
+    toast.success(
+      `${t("toast_message.available_balance")} $${data?.available_balance}`
+    );
   };
 
   return (
@@ -34,12 +38,12 @@ function Dashboard() {
           color="primary"
           fullWidth
         >
-          Recargar
+          {t("services.recharge")}
         </Button>
       </Box>
       <Box sx={{ mb: 2 }}>
         <Button onClick={goPagar} variant="contained" color="primary" fullWidth>
-          Pagar
+          {t("services.pay")}
         </Button>
       </Box>
       <Box sx={{ mb: 2 }}>
@@ -49,7 +53,7 @@ function Dashboard() {
           color="primary"
           fullWidth
         >
-          Consultar Saldo
+          {t("services.check_balance")}
         </Button>
       </Box>
       <Button
@@ -58,7 +62,7 @@ function Dashboard() {
         color="primary"
         fullWidth
       >
-        Movimientos de Cuenta
+        {t("services.account_movements")}
       </Button>
     </MainLayout>
   );

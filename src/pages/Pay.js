@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
@@ -10,6 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-hot-toast";
 import routes from "../constants/routes";
 import TextFieldPassword from "../components/TextFieldPassword";
+import { useTranslation } from "react-i18next";
 
 const Schema = yup.object().shape({
   amount: yup.number().required(),
@@ -18,6 +19,7 @@ const Schema = yup.object().shape({
 });
 
 function Pay() {
+  const { t } = useTranslation();
   let history = useHistory();
   const { mutate } = usePay();
   const { handleSubmit, control, reset } = useForm({
@@ -29,17 +31,17 @@ function Pay() {
       {
         onSuccess: () => {
           reset();
-          toast.success("Pago completado exitosamente");
+          toast.success(`${t("toast_message.pay_success")}`);
           history.push(routes.DASHBOARD);
         },
         onError: ({ message }) => {
-          toast.error(message || "Ha ocurrido un error");
+          toast.error(message || `${t("toast_message.there_is_error")}`);
         },
       }
     );
   };
   return (
-    <MainLayout title="Pay">
+    <MainLayout title={t("services.pay")}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
@@ -49,7 +51,7 @@ function Pay() {
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
-              label="Amount"
+              label={t("forms.labels.amount")}
               variant="filled"
               fullWidth
             />
@@ -63,7 +65,7 @@ function Pay() {
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
-              label="Concept"
+              label={t("forms.labels.concept")}
               variant="filled"
               fullWidth
             />
@@ -77,14 +79,14 @@ function Pay() {
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
-              label="Password"
+              label={t("forms.labels.password")}
               variant="filled"
               fullWidth
             />
           )}
         />
         <Button type="submit" variant="contained" color="primary" fullWidth>
-          Recharge
+          {t("services.pay")}
         </Button>
       </form>
     </MainLayout>
