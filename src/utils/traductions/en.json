@@ -37,12 +37,12 @@
     "email": "*Must be a valid email format",
     "confirmation_password": "*Password confirmation is required",
     "passwords_not_same": "*Passwords do not match",
-    "should_have_lowercase": "Should have a lowercase character",
-    "should_have_uppercase": "Should have an uppercase character",
-    "should_have_number": "Should have a number",
-    "should_have_special_character": "Should have a special character",
-    "min_characters": "The minimum number of characters is {{number}} digits",
-    "max_characters": "The maximum number of characters is {{number}} digits"
+    "should_have_lowercase": "*Should have a lowercase character",
+    "should_have_uppercase": "*Should have an uppercase character",
+    "should_have_number": "*Should have a number",
+    "should_have_special_character": "*Should have a special character",
+    "min_characters": "*The minimum number of characters is {{number}} digits",
+    "max_characters": "*The maximum number of characters is {{number}} digits"
   },
   "logout": "Logout",
   "footer": "Created by Software Developer Ilemar Andrade",

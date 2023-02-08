@@ -1,6 +1,5 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
 import MainLayout from "../layout/MainLayout";
 import { Controller, useForm } from "react-hook-form";
@@ -11,6 +10,7 @@ import { toast } from "react-hot-toast";
 import routes from "../constants/routes";
 import TextFieldPassword from "../components/TextFieldPassword";
 import { useTranslation } from "react-i18next";
+import TextFieldOwn from "../components/TextFieldOwn";
 
 const Schema = yup.object().shape({
   amount: yup.number().required(),
@@ -47,7 +47,7 @@ function Pay() {
           control={control}
           name="amount"
           render={({ field, fieldState }) => (
-            <TextField
+            <TextFieldOwn
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
@@ -61,7 +61,7 @@ function Pay() {
           control={control}
           name="concept"
           render={({ field, fieldState }) => (
-            <TextField
+            <TextFieldOwn
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}

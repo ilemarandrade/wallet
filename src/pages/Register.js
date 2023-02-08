@@ -1,5 +1,4 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,6 +10,7 @@ import routes from "../constants/routes";
 import { useTranslation } from "react-i18next";
 import i18n from "../utils/traductions/i18n";
 import TextFieldPassword from "../components/TextFieldPassword";
+import TextFieldOwn from "../components/TextFieldOwn";
 
 const Schema = yup.object().shape({
   name: yup.string().required(),
@@ -58,7 +58,7 @@ function Register() {
           control={control}
           name="name"
           render={({ field, fieldState }) => (
-            <TextField
+            <TextFieldOwn
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
@@ -72,7 +72,7 @@ function Register() {
           control={control}
           name="lastname"
           render={({ field, fieldState }) => (
-            <TextField
+            <TextFieldOwn
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
@@ -86,7 +86,7 @@ function Register() {
           control={control}
           name="email"
           render={({ field, fieldState }) => (
-            <TextField
+            <TextFieldOwn
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
@@ -100,7 +100,7 @@ function Register() {
           control={control}
           name="document"
           render={({ field, fieldState }) => (
-            <TextField
+            <TextFieldOwn
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
@@ -114,7 +114,7 @@ function Register() {
           control={control}
           name="phone"
           render={({ field, fieldState }) => (
-            <TextField
+            <TextFieldOwn
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}
