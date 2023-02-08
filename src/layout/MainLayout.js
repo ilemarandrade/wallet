@@ -29,7 +29,7 @@ function MainLayout({ title, children }) {
       }}
       className="perfectCentered"
     >
-      <Typography variant="h4" component="h1">
+      <Typography variant="h4" component="h1" align="center">
         {title}
       </Typography>
       <ContainerMain fullWidth={pathname === routes.MOVEMENTS}>

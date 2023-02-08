@@ -18,16 +18,16 @@
     }
   },
   "services": {
-    "recharge": "Recargar",
-    "pay": "Pagar",
+    "recharge": "Ingreso",
+    "pay": "Gasto",
     "check_balance": "Consultar Saldo",
     "account_movements": "Movimientos de cuenta"
   },
   "toast_message": {
     "available_balance": "Tu balance es:",
     "there_is_error": "Ha ocurrido un error",
-    "pay_success": "Pago completado exitosamente",
-    "recharge_success": "Recarga completada exitosamente",
+    "pay_success": "Gasto guardado exitosamente",
+    "recharge_success": "Ingreso guardado exitosamente",
     "register_success": "Registro completado exitosamente",
     "welcome": "Bienvenido!",
     "logout_success": "Sesión Cerrada exitosamente!"

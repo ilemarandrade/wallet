@@ -18,16 +18,16 @@
     }
   },
   "services": {
-    "recharge": "Recharge",
-    "pay": "Pay",
+    "recharge": "Income",
+    "pay": "Spent",
     "check_balance": "Check Balance",
     "account_movements": "Account Movements"
   },
   "toast_message": {
     "available_balance": "Your available balance is:",
     "there_is_error": "An error has occurred",
-    "pay_success": "Payment completed successfully",
-    "recharge_success": "Recharge completed successfully",
+    "pay_success": "Spent completed successfully",
+    "recharge_success": "Income saved successfully",
     "register_success": "Register completed successfully",
     "welcome": "Welcome!",
     "logout_success": "Logout success!"
