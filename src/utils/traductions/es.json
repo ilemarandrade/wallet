@@ -36,6 +36,7 @@
   "validation_message": {
     "required": "*Este campo es requerido",
     "email": "*Debe ser un formato de email válido",
+    "number": "*Debe ser un formato numérico",
     "confirmation_password": "*La confirmación de contraseña es requerida",
     "passwords_not_same": "*Las contraseñas no coinciden",
     "should_have_lowercase": "*Debe poseer un carácter con minúscula",

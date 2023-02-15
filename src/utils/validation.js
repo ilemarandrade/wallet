@@ -18,7 +18,6 @@ yup.setLocale({
 });
 
 yup.addMethod(yup.string, "password", function password(maxLength = 70) {
-  // eslint-disable-next-line react/jsx-indent
   return this.min(8, t("validation_message.min_characters", { number: 8 }))
     .matches(/(.*[a-z].*)/, t("validation_message.should_have_lowercase"))
     .matches(/(.*[A-Z].*)/, t("validation_message.should_have_uppercase"))
