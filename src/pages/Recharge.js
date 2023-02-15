@@ -12,17 +12,18 @@ import routes from "../constants/routes";
 import { useTranslation } from "react-i18next";
 import TextFieldOwn from "../components/TextFieldOwn";
 
-const Schema = yup.object().shape({
-  amount: yup.number().required(),
-  concept: yup.string().required(),
-  password: yup.string().required(),
-});
+const Schema = (t) =>
+  yup.object().shape({
+    amount: yup.number().typeError(t("validation_message.number")).required(),
+    concept: yup.string().required(),
+    password: yup.string().required(),
+  });
 
 function Recharge() {
   const { t } = useTranslation();
   const { mutate } = useRecharge();
   const { handleSubmit, control, reset } = useForm({
-    resolver: yupResolver(Schema),
+    resolver: yupResolver(Schema(t)),
   });
 
   let history = useHistory();

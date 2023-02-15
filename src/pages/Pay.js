@@ -12,18 +12,19 @@ import TextFieldPassword from "../components/TextFieldPassword";
 import { useTranslation } from "react-i18next";
 import TextFieldOwn from "../components/TextFieldOwn";
 
-const Schema = yup.object().shape({
-  amount: yup.number().required(),
-  concept: yup.string().required(),
-  password: yup.string().required(),
-});
+const Schema = (t) =>
+  yup.object().shape({
+    amount: yup.number().typeError(t("validation_message.number")).required(),
+    concept: yup.string().required(),
+    password: yup.string().required(),
+  });
 
 function Pay() {
   const { t } = useTranslation();
   let history = useHistory();
   const { mutate } = usePay();
   const { handleSubmit, control, reset } = useForm({
-    resolver: yupResolver(Schema),
+    resolver: yupResolver(Schema(t)),
   });
   const onSubmit = (values) => {
     mutate(
