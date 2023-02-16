@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -11,6 +11,12 @@ import TableRow from "@material-ui/core/TableRow";
 import moment from "moment";
 import styled from "styled-components";
 import i18next from "../utils/traductions/i18n";
+import { IconButton, Tooltip, useMediaQuery } from "@material-ui/core";
+import MovementsCell from "./MovementsCell";
+import { useTranslation } from "react-i18next";
+import MovementDetails from "./MovementDetails";
+import { useTheme } from "@material-ui/core/styles";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const TableHeadStyles = styled(TableHead)(
   ({ theme }) => `
@@ -47,6 +53,10 @@ const columns = [
     id: "remaining_balance",
     format: (amount) => `$${amount}`,
   },
+  {
+    label: i18next.t("actions"),
+    id: "actions",
+  },
 ];
 const useStyles = makeStyles({
   root: {
@@ -61,6 +71,13 @@ const useStyles = makeStyles({
   pagination: {
     position: "absolute",
     bottom: "0px",
+    background: "white",
+  },
+  cell: {
+    textOverflow: "ellipsis",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    maxWidth: "200px",
   },
 });
 
@@ -68,7 +85,10 @@ export default function StickyHeadTable({ data }) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+  const [movementSelected, setMovementSelected] = useState(null);
+  const isDesktop = useMediaQuery((theme) => theme.breakpoints.up("sm"));
+  const theme = useTheme();
+  const { t } = useTranslation();
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -78,67 +98,131 @@ export default function StickyHeadTable({ data }) {
     setPage(0);
   };
 
+  const handleMovementSelected = (movement) => {
+    console.log(movement);
+    setMovementSelected(movement);
+  };
+
+  const handleCloseDetails = () => {
+    setMovementSelected(null);
+  };
+
   return (
-    <Paper className={classes.root}>
-      <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHeadStyles>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHeadStyles>
-          <TableBody>
-            {data
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      const isIdAmount = column.id === "amount";
-                      const isAmountPositive = isIdAmount
-                        ? row[column.id] > 0
-                        : "";
-                      return (
-                        <TableCell
-                          key={column.id}
-                          align={column.align}
-                          style={{
-                            color: isIdAmount
-                              ? isAmountPositive
-                                ? "#1ab187"
-                                : "red"
-                              : "",
-                          }}
-                        >
-                          {column.format ? column.format(value) : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={data.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        className={classes.pagination}
-      />
-    </Paper>
+    <>
+      {!!movementSelected && (
+        <MovementDetails onClose={handleCloseDetails} data={movementSelected} />
+      )}
+      <Paper className={classes.root}>
+        {isDesktop ? (
+          <TableContainer className={classes.container}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHeadStyles>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ minWidth: column.minWidth }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHeadStyles>
+              <TableBody>
+                {data
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.code}
+                      >
+                        {columns.map((column) => {
+                          const value = row[column.id];
+                          const isActions = column.id === "actions";
+                          const isIdAmount = column.id === "amount";
+                          const isAmountPositive = isIdAmount
+                            ? row[column.id] > 0
+                            : "";
+                          return (
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
+                              style={{
+                                color: isIdAmount
+                                  ? isAmountPositive
+                                    ? theme.palette.primary.main
+                                    : theme.palette.error.main
+                                  : "",
+                              }}
+                              className={classes.cell}
+                            >
+                              <Tooltip
+                                title={
+                                  column.format ? column.format(value) : value
+                                }
+                                arial-label="Error"
+                                leaveTouchDelay={3000}
+                                enterTouchDelay={0}
+                                placement="bottom-start"
+                              >
+                                {isActions ? (
+                                  <Tooltip title={t("forms.buttons.delete")}>
+                                    <IconButton
+                                      onClick={() =>
+                                        handleMovementSelected({
+                                          ...row,
+                                          shouldOnlyShowWarningDelete: true,
+                                        })
+                                      }
+                                    >
+                                      <DeleteIcon
+                                        fontSize="small"
+                                        htmlColor={theme.palette.error.light}
+                                      />
+                                    </IconButton>
+                                  </Tooltip>
+                                ) : (
+                                  <span>
+                                    {column.format
+                                      ? column.format(value)
+                                      : value}
+                                  </span>
+                                )}
+                              </Tooltip>
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        ) : (
+          <MovementsCell
+            data={data.slice(
+              page * rowsPerPage,
+              page * rowsPerPage + rowsPerPage
+            )}
+            movementSelected={handleMovementSelected}
+          />
+        )}
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={data.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          className={classes.pagination}
+          labelRowsPerPage={t("row_per_page")}
+        />
+      </Paper>
+    </>
   );
 }
