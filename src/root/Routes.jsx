@@ -20,6 +20,7 @@ const Container = styled.div`
 
   ${theme.breakpoints.down("sm")}{
     padding-top: 10vh;
+    margin-bottom: 0px;
   }
 
 `}
@@ -32,10 +33,6 @@ const LanguageStyles = styled(Language)`
 `;
 export const privateRoutes = [
   {
-    Component: Dashboard,
-    path: routes.DASHBOARD,
-  },
-  {
     Component: Recharge,
     path: routes.RECHARGE,
   },
@@ -47,12 +44,16 @@ export const privateRoutes = [
     Component: Movements,
     path: routes.MOVEMENTS,
   },
+  {
+    Component: Dashboard,
+    path: routes.DASHBOARD,
+  },
 ];
 const Routes = () => {
   const isFetching = useIsFetching();
   const isMutating = useIsMutating();
   return (
-    <Container sx={{ minHeight: "calc(100vh - 72px)", mb: 6, paddingY: 6 }}>
+    <Container sx={{ mb: 6, paddingY: 6 }}>
       <LanguageStyles />
       <Loading open={!!isFetching || !!isMutating} />
       <Switch>

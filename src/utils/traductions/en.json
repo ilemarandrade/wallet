@@ -14,7 +14,10 @@
     },
     "buttons": {
       "register": "Register",
-      "login": "Log In"
+      "login": "Log In",
+      "delete": "Delete",
+      "back": "Back",
+      "continue": "Continue"
     }
   },
   "services": {
@@ -46,6 +49,20 @@
     "min_characters": "*The minimum number of characters is {{number}} digits",
     "max_characters": "*The maximum number of characters is {{number}} digits"
   },
+  "abbreviated_months": {
+    "jan": "Jan",
+    "feb": "Feb",
+    "mar": "Mar",
+    "apr": "Apr",
+    "may": "May",
+    "jun": "Jun",
+    "jul": "Jul",
+    "aug": "Aug",
+    "sep": "Sep",
+    "oct": "Oct",
+    "nov": "Nov",
+    "dec": "Dec"
+  },
   "logout": "Logout",
   "footer": "Created by Software Developer Ilemar Andrade",
   "date": "Date",
@@ -54,5 +71,8 @@
   "user": "User",
   "main_title": "Wallet",
   "credit": "Credit",
-  "debit": "Debit"
+  "debit": "Debit",
+  "actions": "Actions",
+  "row_per_page": "Row per page",
+  "warning_action": "This action is irreversible. \nAre you sure to proceed?"
 }

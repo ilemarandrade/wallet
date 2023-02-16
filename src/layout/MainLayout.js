@@ -18,7 +18,7 @@ export const ContainerMain = styled.div`
   `}
 `;
 
-function MainLayout({ title, children }) {
+function MainLayout({ title, children, className }) {
   const { pathname } = useLocation();
 
   return (
@@ -27,7 +27,7 @@ function MainLayout({ title, children }) {
         flexDirection: "column",
         "& h1": { color: "white", fontWeight: 600 },
       }}
-      className="perfectCentered"
+      className={`${className} perfectCentered`}
     >
       <Typography variant="h4" component="h1" align="center">
         {title}
