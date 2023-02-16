@@ -1,4 +1,4 @@
-export default {
+const routes = {
   INIT: "/auth",
   LOGIN: "/auth/login",
   SIGNUP: "/auth/signup",
@@ -8,3 +8,4 @@ export default {
   BALANCEINQUIRY: "/dashboard/balance_inquiry",
   MOVEMENTS: "/dashboard/movements",
 };
+export default routes;
