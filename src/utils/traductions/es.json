@@ -14,7 +14,10 @@
     },
     "buttons": {
       "register": "Registrar",
-      "login": "Iniciar Sesión"
+      "login": "Iniciar Sesión",
+      "delete": "Eliminar",
+      "back": "Volver",
+      "continue": "Continuar"
     }
   },
   "services": {
@@ -46,6 +49,20 @@
     "min_characters": "*El mínimo número de caracteres es de {{number}} dígitos",
     "max_characters": "*El maximo número de caracteres es de {{number}} dígitos"
   },
+  "abbreviated_months": {
+    "jan": "Ene",
+    "feb": "Feb",
+    "mar": "Mar",
+    "apr": "Abr",
+    "may": "May",
+    "jun": "Jun",
+    "jul": "Jul",
+    "aug": "Ago",
+    "sep": "Sep",
+    "oct": "Oct",
+    "nov": "Nov",
+    "dec": "Dic"
+  },
   "logout": "Cerrar Sesión",
   "footer": "Creado por el Desarrollador de Software Ilemar Andrade",
   "date": "Fecha",
@@ -54,5 +71,8 @@
   "user": "Usuario",
   "main_title": "Billetera",
   "credit": "Credito",
-  "debit": "Debito"
+  "actions": "Acciones",
+  "debit": "Debito",
+  "row_per_page": "Filas x página",
+  "warning_action": "Esta acción es irreversible. \n¿Estás seguro de continuar?"
 }
