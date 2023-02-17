@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import MovementDetails from "./MovementDetails";
 import { useTheme } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 
 const TableHeadStyles = styled(TableHead)(
   ({ theme }) => `
@@ -92,14 +93,12 @@ export default function StickyHeadTable({ data }) {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
   const handleMovementSelected = (movement) => {
-    console.log(movement);
     setMovementSelected(movement);
   };
 
@@ -160,39 +159,56 @@ export default function StickyHeadTable({ data }) {
                               }}
                               className={classes.cell}
                             >
-                              <Tooltip
-                                title={
-                                  column.format ? column.format(value) : value
-                                }
-                                arial-label="Error"
-                                leaveTouchDelay={3000}
-                                enterTouchDelay={0}
-                                placement="bottom-start"
-                              >
-                                {isActions ? (
-                                  <Tooltip title={t("forms.buttons.delete")}>
+                              {isActions ? (
+                                <>
+                                  {!row.wasRemoved && (
+                                    <Tooltip title={t("forms.buttons.delete")}>
+                                      <IconButton
+                                        onClick={() =>
+                                          handleMovementSelected({
+                                            ...row,
+                                            shouldOnlyShowWarningDelete: true,
+                                          })
+                                        }
+                                      >
+                                        <DeleteIcon
+                                          fontSize="small"
+                                          htmlColor={theme.palette.error.light}
+                                        />
+                                      </IconButton>
+                                    </Tooltip>
+                                  )}
+                                  <Tooltip title={t("review")}>
                                     <IconButton
                                       onClick={() =>
                                         handleMovementSelected({
                                           ...row,
-                                          shouldOnlyShowWarningDelete: true,
                                         })
                                       }
                                     >
-                                      <DeleteIcon
+                                      <VisibilityIcon
                                         fontSize="small"
-                                        htmlColor={theme.palette.error.light}
+                                        color="primary"
                                       />
                                     </IconButton>
                                   </Tooltip>
-                                ) : (
+                                </>
+                              ) : (
+                                <Tooltip
+                                  title={
+                                    column.format ? column.format(value) : value
+                                  }
+                                  leaveTouchDelay={3000}
+                                  enterTouchDelay={0}
+                                  placement="bottom-start"
+                                >
                                   <span>
                                     {column.format
                                       ? column.format(value)
                                       : value}
                                   </span>
-                                )}
-                              </Tooltip>
+                                </Tooltip>
+                              )}
                             </TableCell>
                           );
                         })}

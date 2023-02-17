@@ -6,12 +6,16 @@ import {
   Grid,
   IconButton,
   Typography,
+  useMediaQuery,
 } from "@material-ui/core";
 import styled from "styled-components";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import CloseIcon from "@material-ui/icons/Close";
 import DeleteIcon from "@material-ui/icons/Delete";
+import useDeleteMovement from "../hook/api/useDeleteMovement";
+import { toast } from "react-hot-toast";
+import { useQueryClient } from "@tanstack/react-query";
 
 const DialogStyles = styled(Dialog)`
   ${({ theme }) => `
@@ -19,6 +23,7 @@ const DialogStyles = styled(Dialog)`
         padding: 32px;
         border-radius: 32px;
         min-height: 350px;
+        min-width: 350px;
       }
     ${theme.breakpoints.down("xs")}{
         & .MuiDialog-paper {
@@ -48,6 +53,9 @@ const ContainerItems = styled.div`
 
   & p:first-child {
     font-weight: 600;
+  }
+  & .debit {
+    color: ${({ theme }) => theme.palette.error.main};
   }
 `;
 
@@ -79,16 +87,22 @@ const WarningContainer = styled(Grid)`
   `}
 `;
 const MovementDetails = ({ data, onClose }) => {
+  const { mutate } = useDeleteMovement();
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("xs"));
   const {
     date,
     type,
     amount,
     remaining_balance,
     concept,
+    _id,
     shouldOnlyShowWarningDelete = false,
+    wasRemoved = false,
   } = data;
   const [showWarning, setShowWarning] = useState(shouldOnlyShowWarningDelete);
+
   const dataFormated = [
     {
       title: t("date"),
@@ -112,6 +126,24 @@ const MovementDetails = ({ data, onClose }) => {
       value: `$${remaining_balance}`,
     },
   ];
+
+  const deleteMovement = () => {
+    mutate(
+      {
+        movement_id: _id,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Exitoso");
+          queryClient.invalidateQueries({ queryKey: ["movements"] });
+          onClose();
+        },
+        onError: ({ data: { message } }) => {
+          toast.error(message || `${t("toast_message.there_is_error")}`);
+        },
+      }
+    );
+  };
   return (
     <DialogStyles open onClose={onClose}>
       <IconCloseStyles onClick={onClose}>
@@ -144,9 +176,7 @@ const MovementDetails = ({ data, onClose }) => {
             </Button>
           </Box>
           <ButtonDelete
-            onClick={() =>
-              shouldOnlyShowWarningDelete ? onClose() : setShowWarning(false)
-            }
+            onClick={deleteMovement}
             variant="contained"
             fullWidth
             size="small"
@@ -175,15 +205,17 @@ const MovementDetails = ({ data, onClose }) => {
               </ContainerItems>
             );
           })}
-          <ButtonDelete
-            startIcon={<DeleteIcon />}
-            onClick={() => setShowWarning(true)}
-            variant="contained"
-            fullWidth
-            size="small"
-          >
-            {t("forms.buttons.delete")}
-          </ButtonDelete>
+          {isMobile && !wasRemoved && (
+            <ButtonDelete
+              startIcon={<DeleteIcon />}
+              onClick={() => setShowWarning(true)}
+              variant="contained"
+              fullWidth
+              size="small"
+            >
+              {t("forms.buttons.delete")}
+            </ButtonDelete>
+          )}
         </>
       )}
     </DialogStyles>
