@@ -12,6 +12,9 @@ import routes from "../constants/routes";
 import { useTranslation } from "react-i18next";
 import TextFieldOwn from "../components/TextFieldOwn";
 import { useQueryClient } from "@tanstack/react-query";
+import TextFieldCurrency, {
+  formatCurrencyToNumber,
+} from "../components/TextFieldCurrency";
 
 const Schema = (t) =>
   yup.object().shape({
@@ -31,7 +34,7 @@ function Recharge() {
   const history = useHistory();
   const onSubmit = (values) => {
     mutate(
-      { ...values },
+      { ...values, amount: formatCurrencyToNumber(values.amount) },
       {
         onSuccess: (data) => {
           reset();
@@ -52,7 +55,7 @@ function Recharge() {
           control={control}
           name="amount"
           render={({ field, fieldState }) => (
-            <TextFieldOwn
+            <TextFieldCurrency
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}

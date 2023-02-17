@@ -18,6 +18,7 @@ import MovementDetails from "./MovementDetails";
 import { useTheme } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import VisibilityIcon from "@material-ui/icons/Visibility";
+import currency from "../utils/currency";
 
 const TableHeadStyles = styled(TableHead)(
   ({ theme }) => `
@@ -33,7 +34,7 @@ const columns = [
   {
     label: i18next.t("date"),
     id: "date",
-    format: (date) => moment.unix(date).format("DD-MM-YY hh:mm"),
+    format: (date) => moment.unix(date).format("DD-MM-YY hh:mm a"),
     minWidth: 150,
   },
   { label: i18next.t("forms.labels.concept"), id: "concept", minWidth: 150 },
@@ -46,13 +47,13 @@ const columns = [
   {
     label: i18next.t("forms.labels.amount"),
     id: "amount",
-    format: (amount) => `$${amount}`,
+    format: (amount) => currency(amount),
     minWidth: 150,
   },
   {
     label: i18next.t("remaining"),
     id: "remaining_balance",
-    format: (amount) => `$${amount}`,
+    format: (amount) => currency(amount),
   },
   {
     label: i18next.t("actions"),

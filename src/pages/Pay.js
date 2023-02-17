@@ -12,10 +12,13 @@ import TextFieldPassword from "../components/TextFieldPassword";
 import { useTranslation } from "react-i18next";
 import TextFieldOwn from "../components/TextFieldOwn";
 import { useQueryClient } from "@tanstack/react-query";
+import TextFieldCurrency, {
+  formatCurrencyToNumber,
+} from "../components/TextFieldCurrency";
 
 const Schema = (t) =>
   yup.object().shape({
-    amount: yup.number().typeError(t("validation_message.number")).required(),
+    amount: yup.string().required(),
     concept: yup.string().required(),
     password: yup.string().required(),
   });
@@ -30,7 +33,7 @@ function Pay() {
   });
   const onSubmit = (values) => {
     mutate(
-      { ...values },
+      { ...values, amount: formatCurrencyToNumber(values.amount) },
       {
         onSuccess: () => {
           reset();
@@ -51,7 +54,7 @@ function Pay() {
           control={control}
           name="amount"
           render={({ field, fieldState }) => (
-            <TextFieldOwn
+            <TextFieldCurrency
               {...{ ...field }}
               error={fieldState.error}
               helperText={fieldState?.error?.message}

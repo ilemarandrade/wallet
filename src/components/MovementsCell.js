@@ -4,6 +4,7 @@ import React from "react";
 import styled from "styled-components";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { useTranslation } from "react-i18next";
+import currency from "../utils/currency";
 
 const months = (t) => [
   t("abbreviated_months.jan"),
@@ -127,7 +128,7 @@ const MovementsCell = ({ data, movementSelected }) => {
                 <div className="name">{movement.concept}</div>
               </Tooltip>
 
-              <div className={movement.type}>{`$${movement.amount}`}</div>
+              <div className={movement.type}>{currency(movement.amount)}</div>
               <Arrow>
                 <ChevronRightIcon />
               </Arrow>
