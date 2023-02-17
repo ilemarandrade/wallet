@@ -18,7 +18,7 @@ import TextFieldCurrency, {
 
 const Schema = (t) =>
   yup.object().shape({
-    amount: yup.number().typeError(t("validation_message.number")).required(),
+    amount: yup.string().required(),
     concept: yup.string().required(),
     password: yup.string().required(),
   });

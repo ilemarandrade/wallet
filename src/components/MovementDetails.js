@@ -124,7 +124,7 @@ const MovementDetails = ({ data, onClose }) => {
     {
       title: t("remaining"),
       id: "remaining_balance",
-      value: `$${remaining_balance}`,
+      value: currency(remaining_balance),
     },
   ];
 
