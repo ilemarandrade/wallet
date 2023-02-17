@@ -16,6 +16,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import useDeleteMovement from "../hook/api/useDeleteMovement";
 import { toast } from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
+import currency from "../utils/currency";
 
 const DialogStyles = styled(Dialog)`
   ${({ theme }) => `
@@ -106,7 +107,7 @@ const MovementDetails = ({ data, onClose }) => {
   const dataFormated = [
     {
       title: t("date"),
-      value: moment.unix(date).format("DD-MM-YY hh:mm"),
+      value: moment.unix(date).format("DD-MM-YY hh:mm a"),
       id: "date",
     },
     { title: t("forms.labels.concept"), id: "concept", value: concept },
@@ -118,7 +119,7 @@ const MovementDetails = ({ data, onClose }) => {
     {
       title: t("forms.labels.amount"),
       id: "amount",
-      value: `$${amount}`,
+      value: currency(amount),
     },
     {
       title: t("remaining"),

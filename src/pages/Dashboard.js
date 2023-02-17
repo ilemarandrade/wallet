@@ -6,6 +6,7 @@ import routes from "../constants/routes";
 import useCheckBalance from "../hook/api/useCheckBalance";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import currency from "../utils/currency";
 
 function Dashboard() {
   let history = useHistory();
@@ -25,7 +26,9 @@ function Dashboard() {
   };
   const goConsulta = () => {
     toast.success(
-      `${t("toast_message.available_balance")} $${data?.available_balance}`
+      `${t("toast_message.available_balance")} ${currency(
+        data?.available_balance
+      )}`
     );
   };
 
