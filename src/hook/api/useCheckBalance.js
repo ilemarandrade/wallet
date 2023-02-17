@@ -5,9 +5,9 @@ const check_balance = () => instance.get("/wallet/check_balance");
 
 const useCheckBalance = (config = {}) => {
   return useQuery({
-    queryKey: "check_balance",
+    queryKey: ["check_balance"],
     queryFn: check_balance,
-    ...config
+    ...config,
   });
 };
 
