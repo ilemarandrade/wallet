@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Register from "./Register.js";
 import Login from "./Login.js";
 import styled from "styled-components";
@@ -31,6 +31,7 @@ function RegisterOrLogin() {
     if (pathname === routes.INIT) {
       history.push(routes.LOGIN);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <MainLayout title={t("main_title")}>

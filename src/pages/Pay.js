@@ -11,6 +11,7 @@ import routes from "../constants/routes";
 import TextFieldPassword from "../components/TextFieldPassword";
 import { useTranslation } from "react-i18next";
 import TextFieldOwn from "../components/TextFieldOwn";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Schema = (t) =>
   yup.object().shape({
@@ -21,7 +22,8 @@ const Schema = (t) =>
 
 function Pay() {
   const { t } = useTranslation();
-  let history = useHistory();
+  const history = useHistory();
+  const queryClient = useQueryClient();
   const { mutate } = usePay();
   const { handleSubmit, control, reset } = useForm({
     resolver: yupResolver(Schema(t)),
@@ -33,9 +35,10 @@ function Pay() {
         onSuccess: () => {
           reset();
           toast.success(`${t("toast_message.pay_success")}`);
+          queryClient.refetchQueries({ queryKey: ["check_balance"] });
           history.push(routes.DASHBOARD);
         },
-        onError: ({ message }) => {
+        onError: ({ data: { message } }) => {
           toast.error(message || `${t("toast_message.there_is_error")}`);
         },
       }

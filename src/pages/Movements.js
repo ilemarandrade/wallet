@@ -25,14 +25,16 @@ function Pay() {
   const history = useHistory();
   const { t } = useTranslation();
   const { data } = useMovements({
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
     onSuccess: ({ movements }) => {
       if (!movements.length) {
         toast.error(`${t("toast_message.whithout_movements")}`);
         history.push(routes.DASHBOARD);
       }
     },
-    onError: () => {
-      toast.error(`${t("toast_message.there_is_error")}`);
+    onError: ({ data: { message } }) => {
+      toast.error(message || `${t("toast_message.there_is_error")}`);
     },
   });
   return (

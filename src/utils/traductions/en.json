@@ -74,5 +74,6 @@
   "debit": "Debit",
   "actions": "Actions",
   "row_per_page": "Row per page",
-  "warning_action": "This action is irreversible. \nAre you sure to proceed?"
+  "warning_action": "This action is irreversible. \nAre you sure to proceed?",
+  "review": "Review"
 }

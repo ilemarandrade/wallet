@@ -5,7 +5,7 @@ const movements = () => instance.get("/wallet/movements");
 
 const useMovements = (config = {}) => {
   return useQuery({
-    queryKey: "movements",
+    queryKey: ["movements"],
     queryFn: movements,
     ...config,
   });

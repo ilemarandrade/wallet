@@ -6,6 +6,8 @@ import customTheme from "./theme";
 import UserProvider from "../providers/UserProvider";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router } from "react-router-dom";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 const Providers = ({ children }) => {
   const queryClient = new QueryClient();
   return (
@@ -26,6 +28,7 @@ const Providers = ({ children }) => {
           </ThemeProvider>
         </MuiThemeProvider>
       </Router>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 };

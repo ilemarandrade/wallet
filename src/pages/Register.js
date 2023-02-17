@@ -42,7 +42,7 @@ function Register() {
         toast.success(`${t("toast_message.register_success")}`);
         history.push(routes.LOGIN);
       },
-      onError: ({ message }) => {
+      onError: ({ data: { message } }) => {
         toast.error(message || `${t("toast_message.there_is_error")}`);
       },
     });

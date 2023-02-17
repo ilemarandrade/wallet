@@ -11,6 +11,7 @@ import { toast } from "react-hot-toast";
 import routes from "../constants/routes";
 import { useTranslation } from "react-i18next";
 import TextFieldOwn from "../components/TextFieldOwn";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Schema = (t) =>
   yup.object().shape({
@@ -21,12 +22,13 @@ const Schema = (t) =>
 
 function Recharge() {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const { mutate } = useRecharge();
   const { handleSubmit, control, reset } = useForm({
     resolver: yupResolver(Schema(t)),
   });
 
-  let history = useHistory();
+  const history = useHistory();
   const onSubmit = (values) => {
     mutate(
       { ...values },
@@ -34,9 +36,10 @@ function Recharge() {
         onSuccess: (data) => {
           reset();
           toast.success(`${t("toast_message.recharge_success")}`);
+          queryClient.refetchQueries({ queryKey: ["check_balance"] });
           history.push(routes.DASHBOARD);
         },
-        onError: ({ message }) => {
+        onError: ({ data: { message } }) => {
           toast.error(message || `${t("toast_message.there_is_error")}`);
         },
       }
