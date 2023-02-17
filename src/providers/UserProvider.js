@@ -68,7 +68,7 @@ const UserProvider = ({ children }) => {
           setRequestTokenVerification(true);
           history.push(routes.DASHBOARD);
         },
-        onError: ({ message }) => {
+        onError: ({ data: { message } }) => {
           toast.error(message || `${t("toast_message.there_is_error")}`);
         },
       }

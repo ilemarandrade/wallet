@@ -11,7 +11,7 @@ function Dashboard() {
   let history = useHistory();
   const { t } = useTranslation();
   const { data } = useCheckBalance({
-    refetchOnMount: true,
+    refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
   const goRecarga = () => {
