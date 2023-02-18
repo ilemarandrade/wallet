@@ -60,7 +60,7 @@ const PrivateRoute = (props) => {
   const notDashboard = pathname !== routes.DASHBOARD;
   const { t } = useTranslation();
   const backToDashboard = () => {
-    history.push("/dashboard");
+    history.push(routes.DASHBOARD);
   };
   useEffect(() => {
     if (!isLogged) {

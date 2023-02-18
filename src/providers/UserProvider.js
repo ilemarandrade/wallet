@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Loading from "../components/Loading";
-import routes from "../constants/routes";
+import routes, { routesPublic } from "../constants/routes";
 import useGetUserInformation from "../hook/api/useGetUserInformation";
 import {
   getLocalStorageKey,
@@ -31,10 +31,12 @@ const UserProvider = ({ children }) => {
   } = useTranslation();
   const lang = userLanguage();
   const history = useHistory();
+  const { pathname } = useLocation();
   const [isFetchedProfile, setFetchedProfile] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
   const [profile, setProfile] = useState({});
   const queryClient = useQueryClient();
+  const isRoutePublic = Object.values(routesPublic).includes(pathname);
   const [requestTokenVerification, setRequestTokenVerification] =
     useState(false);
 
@@ -47,7 +49,11 @@ const UserProvider = ({ children }) => {
     onSuccess: (data) => {
       setIsLogged(true);
       setProfile(data.user);
-      history.push(routes.DASHBOARD);
+      if (isRoutePublic) {
+        history.push(routes.DASHBOARD);
+      } else {
+        history.push(pathname);
+      }
     },
     onError: () => {
       setIsLogged(false);
@@ -66,6 +72,7 @@ const UserProvider = ({ children }) => {
           toast.success(t("toast_message.welcome"));
           setIsLogged(true);
           setRequestTokenVerification(true);
+          queryClient.refetchQueries({ queryKey: ["get_user_information"] });
           history.push(routes.DASHBOARD);
         },
         onError: ({ data: { message } }) => {
@@ -98,6 +105,11 @@ const UserProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (isLogged && isRoutePublic) {
+      history.push(routes.DASHBOARD);
+    }
+  }, [history, isLogged, isRoutePublic]);
   return (
     <UserContext.Provider value={{ isLogged, logout, login, profile, lang }}>
       {isFetchedProfile ? children : <Loading open />}

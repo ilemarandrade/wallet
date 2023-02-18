@@ -1,11 +1,14 @@
-const routes = {
+export const routesPublic = {
   INIT: "/auth",
   LOGIN: "/auth/login",
   SIGNUP: "/auth/signup",
+};
+const routes = {
+  ...routesPublic,
   DASHBOARD: "/dashboard",
-  PAY: "/dashboard/pay",
-  RECHARGE: "/dashboard/recharge",
-  BALANCEINQUIRY: "/dashboard/balance_inquiry",
-  MOVEMENTS: "/dashboard/movements",
+  PAY: "/pay",
+  RECHARGE: "/recharge",
+  BALANCEINQUIRY: "/balance_inquiry",
+  MOVEMENTS: "/movements",
 };
 export default routes;
