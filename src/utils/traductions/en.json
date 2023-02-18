@@ -75,5 +75,6 @@
   "actions": "Actions",
   "row_per_page": "Row per page",
   "warning_action": "This action is irreversible. \nAre you sure to proceed?",
-  "review": "Review"
+  "review": "Review",
+  "see_removed_moves": "See removed moves"
 }

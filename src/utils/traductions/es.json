@@ -75,5 +75,6 @@
   "debit": "Debito",
   "row_per_page": "Filas x página",
   "warning_action": "Esta acción es irreversible. \n¿Estás seguro de continuar?",
-  "review": "Revisar"
+  "review": "Revisar",
+  "see_removed_moves": "Ver movimientos eliminados"
 }
