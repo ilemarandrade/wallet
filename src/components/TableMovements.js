@@ -11,7 +11,13 @@ import TableRow from "@material-ui/core/TableRow";
 import moment from "moment";
 import styled from "styled-components";
 import i18next from "../utils/traductions/i18n";
-import { IconButton, Tooltip, useMediaQuery } from "@material-ui/core";
+import {
+  Checkbox,
+  FormControlLabel,
+  IconButton,
+  Tooltip,
+  useMediaQuery,
+} from "@material-ui/core";
 import MovementsCell from "./MovementsCell";
 import { useTranslation } from "react-i18next";
 import MovementDetails from "./MovementDetails";
@@ -19,6 +25,19 @@ import { useTheme } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import currency from "../utils/currency";
+
+const CheckboxStyles = styled(FormControlLabel)(
+  ({ theme }) => `
+  color: white;
+  margin-left: 0px;
+  & svg{
+    fill: ${theme.palette.primary.main};
+  }
+  ${[theme.breakpoints.down(600)]}{
+  }
+
+`
+);
 
 const TableHeadStyles = styled(TableHead)(
   ({ theme }) => `
@@ -89,6 +108,14 @@ export default function StickyHeadTable({ data }) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [movementSelected, setMovementSelected] = useState(null);
   const isDesktop = useMediaQuery((theme) => theme.breakpoints.up("sm"));
+  const [seeRemovedMoves, setSeeRemovedMoves] = useState(false);
+  const movementsPerPage = data.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
+  const movements = movementsPerPage.filter(
+    ({ wasRemoved }) => wasRemoved === seeRemovedMoves
+  );
   const theme = useTheme();
   const { t } = useTranslation();
   const handleChangePage = (event, newPage) => {
@@ -109,6 +136,16 @@ export default function StickyHeadTable({ data }) {
 
   return (
     <>
+      <CheckboxStyles
+        control={
+          <Checkbox
+            checked={seeRemovedMoves}
+            onChange={() => setSeeRemovedMoves(!seeRemovedMoves)}
+            color="primary"
+          />
+        }
+        label={t("see_removed_moves")}
+      />
       {!!movementSelected && (
         <MovementDetails onClose={handleCloseDetails} data={movementSelected} />
       )}
@@ -130,101 +167,94 @@ export default function StickyHeadTable({ data }) {
                 </TableRow>
               </TableHeadStyles>
               <TableBody>
-                {data
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.code}
-                      >
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          const isActions = column.id === "actions";
-                          const isIdAmount = column.id === "amount";
-                          const isAmountPositive = isIdAmount
-                            ? row[column.id] > 0
-                            : "";
-                          return (
-                            <TableCell
-                              key={column.id}
-                              align={column.align}
-                              style={{
-                                color: isIdAmount
-                                  ? isAmountPositive
-                                    ? theme.palette.primary.main
-                                    : theme.palette.error.main
-                                  : "",
-                              }}
-                              className={classes.cell}
-                            >
-                              {isActions ? (
-                                <>
-                                  {!row.wasRemoved && (
-                                    <Tooltip title={t("forms.buttons.delete")}>
-                                      <IconButton
-                                        onClick={() =>
-                                          handleMovementSelected({
-                                            ...row,
-                                            shouldOnlyShowWarningDelete: true,
-                                          })
-                                        }
-                                      >
-                                        <DeleteIcon
-                                          fontSize="small"
-                                          htmlColor={theme.palette.error.light}
-                                        />
-                                      </IconButton>
-                                    </Tooltip>
-                                  )}
-                                  <Tooltip title={t("review")}>
+                {movements.map((row) => {
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={row.code}
+                    >
+                      {columns.map((column) => {
+                        const value = row[column.id];
+                        const isActions = column.id === "actions";
+                        const isIdAmount = column.id === "amount";
+                        const isAmountPositive = isIdAmount
+                          ? row[column.id] > 0
+                          : "";
+                        return (
+                          <TableCell
+                            key={column.id}
+                            align={column.align}
+                            style={{
+                              color: isIdAmount
+                                ? isAmountPositive
+                                  ? theme.palette.primary.main
+                                  : theme.palette.error.main
+                                : "",
+                            }}
+                            className={classes.cell}
+                          >
+                            {isActions ? (
+                              <>
+                                {!row.wasRemoved && (
+                                  <Tooltip title={t("forms.buttons.delete")}>
                                     <IconButton
                                       onClick={() =>
                                         handleMovementSelected({
                                           ...row,
+                                          shouldOnlyShowWarningDelete: true,
                                         })
                                       }
                                     >
-                                      <VisibilityIcon
+                                      <DeleteIcon
                                         fontSize="small"
-                                        color="primary"
+                                        htmlColor={theme.palette.error.light}
                                       />
                                     </IconButton>
                                   </Tooltip>
-                                </>
-                              ) : (
-                                <Tooltip
-                                  title={
-                                    column.format ? column.format(value) : value
-                                  }
-                                  leaveTouchDelay={3000}
-                                  enterTouchDelay={0}
-                                  placement="bottom-start"
-                                >
-                                  <span>
-                                    {column.format
-                                      ? column.format(value)
-                                      : value}
-                                  </span>
+                                )}
+                                <Tooltip title={t("review")}>
+                                  <IconButton
+                                    onClick={() =>
+                                      handleMovementSelected({
+                                        ...row,
+                                      })
+                                    }
+                                  >
+                                    <VisibilityIcon
+                                      fontSize="small"
+                                      color="primary"
+                                    />
+                                  </IconButton>
                                 </Tooltip>
-                              )}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    );
-                  })}
+                              </>
+                            ) : (
+                              <Tooltip
+                                title={
+                                  column.format ? column.format(value) : value
+                                }
+                                leaveTouchDelay={3000}
+                                enterTouchDelay={0}
+                                placement="bottom-start"
+                              >
+                                <span>
+                                  {column.format ? column.format(value) : value}
+                                </span>
+                              </Tooltip>
+                            )}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </TableContainer>
         ) : (
           <MovementsCell
-            data={data.slice(
-              page * rowsPerPage,
-              page * rowsPerPage + rowsPerPage
-            )}
+            data={movements}
             movementSelected={handleMovementSelected}
           />
         )}
