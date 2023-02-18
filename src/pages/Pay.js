@@ -38,7 +38,12 @@ function Pay() {
         onSuccess: () => {
           reset();
           toast.success(`${t("toast_message.pay_success")}`);
-          queryClient.refetchQueries({ queryKey: ["check_balance"] });
+          queryClient.refetchQueries({
+            queryKey: ["check_balance"],
+          });
+          queryClient.refetchQueries({
+            queryKey: ["movements"],
+          });
           history.push(routes.DASHBOARD);
         },
         onError: ({ data: { message } }) => {
