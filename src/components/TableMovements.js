@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -109,13 +109,14 @@ export default function StickyHeadTable({ data }) {
   const [movementSelected, setMovementSelected] = useState(null);
   const isDesktop = useMediaQuery((theme) => theme.breakpoints.up("sm"));
   const [seeRemovedMoves, setSeeRemovedMoves] = useState(false);
-  const movementsPerPage = data.slice(
+  const movements = data.filter(
+    ({ wasRemoved }) => wasRemoved === seeRemovedMoves
+  );
+  const movementsPerPage = movements.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
-  const movements = movementsPerPage.filter(
-    ({ wasRemoved }) => wasRemoved === seeRemovedMoves
-  );
+
   const theme = useTheme();
   const { t } = useTranslation();
   const handleChangePage = (event, newPage) => {
@@ -133,6 +134,10 @@ export default function StickyHeadTable({ data }) {
   const handleCloseDetails = () => {
     setMovementSelected(null);
   };
+
+  useEffect(() => {
+    setPage(0);
+  }, [seeRemovedMoves]);
 
   return (
     <>
@@ -167,7 +172,7 @@ export default function StickyHeadTable({ data }) {
                 </TableRow>
               </TableHeadStyles>
               <TableBody>
-                {movements.map((row) => {
+                {movementsPerPage.map((row) => {
                   return (
                     <TableRow
                       hover
@@ -254,14 +259,14 @@ export default function StickyHeadTable({ data }) {
           </TableContainer>
         ) : (
           <MovementsCell
-            data={movements}
+            data={movementsPerPage}
             movementSelected={handleMovementSelected}
           />
         )}
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={data.length}
+          count={movements.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
