@@ -137,6 +137,9 @@ const MovementDetails = ({ data, onClose }) => {
         onSuccess: () => {
           toast.success("Exitoso");
           queryClient.invalidateQueries({ queryKey: ["movements"] });
+          queryClient.refetchQueries({
+            queryKey: ["check_balance"],
+          });
           onClose();
         },
         onError: ({ data: { message } }) => {
