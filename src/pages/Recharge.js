@@ -55,7 +55,7 @@ function Recharge() {
   };
   return (
     <MainLayout title={t("services.recharge")}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} autocomplete="off">
         <Controller
           control={control}
           name="amount"

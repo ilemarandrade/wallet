@@ -54,7 +54,7 @@ function Pay() {
   };
   return (
     <MainLayout title={t("services.pay")}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} autocomplete="off">
         <Controller
           control={control}
           name="amount"

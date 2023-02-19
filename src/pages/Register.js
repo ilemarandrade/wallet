@@ -53,7 +53,7 @@ function Register() {
       <h2 style={{ textAlign: "center", color: "white" }}>
         {t("forms.titles.signup")}
       </h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} autocomplete="off">
         <Controller
           control={control}
           name="name"
