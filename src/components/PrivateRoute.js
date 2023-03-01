@@ -80,7 +80,9 @@ const PrivateRoute = (props) => {
         <Box sx={{ display: "flex" }}>
           <Language />
           <ButtonStyles>
-            <NameStyles>{`${t("user")}: ${profile.name}`} </NameStyles>
+            {profile?.name && (
+              <NameStyles>{`${t("user")}: ${profile.name}`} </NameStyles>
+            )}
             <CloseSessionStyles onClick={logout}>
               {t("logout").toUpperCase()}
             </CloseSessionStyles>

@@ -5,7 +5,6 @@ import MainLayout from "../layout/MainLayout";
 import { Controller, useForm } from "react-hook-form";
 import useRecharge from "../hook/api/useRecharge";
 import { yupResolver } from "@hookform/resolvers/yup";
-import TextFieldPassword from "../components/TextFieldPassword";
 import yup from "../utils/validation";
 import { toast } from "react-hot-toast";
 import routes from "../constants/routes";
@@ -20,7 +19,6 @@ const Schema = (t) =>
   yup.object().shape({
     amount: yup.string().required(),
     concept: yup.string().required(),
-    password: yup.string().required(),
   });
 
 function Recharge() {
@@ -79,20 +77,6 @@ function Recharge() {
               error={fieldState.error}
               helperText={fieldState?.error?.message}
               label={t("forms.labels.concept")}
-              variant="filled"
-              fullWidth
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name="password"
-          render={({ field, fieldState }) => (
-            <TextFieldPassword
-              {...{ ...field }}
-              error={fieldState.error}
-              helperText={fieldState?.error?.message}
-              label={t("forms.labels.password")}
               variant="filled"
               fullWidth
             />
