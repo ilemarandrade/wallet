@@ -26,7 +26,9 @@ const Language = ({ className }) => {
       mutate(
         { lang: newLanguages },
         {
-          onSuccess: () => {},
+          onSuccess: () => {
+            window.location.reload();
+          },
         }
       );
     } else {
