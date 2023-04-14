@@ -71,6 +71,7 @@ const PrivateRoute = (props) => {
   if (!isLogged) {
     return null;
   }
+
   return (
     <Route {...props}>
       <ContainerButtons container>
