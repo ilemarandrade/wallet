@@ -8,11 +8,11 @@ import {
   getLocalStorageKey,
   removeLocalStorageKey,
   setLocalStorageKey,
+  userLanguage,
 } from "../utils/localstoragesKeys";
 import { useQueryClient } from "@tanstack/react-query";
 import useLogin from "../hook/api/useLogin";
 import { useTranslation } from "react-i18next";
-import { userLanguage } from "../utils/traductions/i18n";
 
 export const UserContext = createContext();
 
@@ -86,6 +86,7 @@ const UserProvider = ({ children }) => {
     removeLocalStorageKey();
     queryClient.clear();
     setRequestTokenVerification(false);
+    setIsLogged(false);
     history.push(routes.LOGIN);
     toast.success(t("toast_message.logout_success"));
   };

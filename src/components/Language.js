@@ -4,19 +4,34 @@ import { useTranslation } from "react-i18next";
 import spain from "../assets/espana.png";
 import usa from "../assets/usa.png";
 import styled from "styled-components";
-import { setUserLanguage } from "../utils/traductions/i18n";
+import { setUserLanguage } from "../utils/localstoragesKeys";
+import useUpdateUser from "../hook/api/useUpdateUser";
+import { useStateUser } from "../providers/UserProvider";
 
 const FlagStyles = styled.img`
   width: 30px;
 `;
 const Language = ({ className }) => {
+  const { isLogged } = useStateUser();
+  const { mutate } = useUpdateUser();
   const {
     i18n: { language },
   } = useTranslation();
   const isEnglish = language === "en";
+  const newLanguages = isEnglish ? "es" : "en";
+
   const changeLanguagePage = () => {
-    setUserLanguage(isEnglish ? "es" : "en");
-    window.location.reload();
+    setUserLanguage(newLanguages);
+    if (isLogged) {
+      mutate(
+        { lang: newLanguages },
+        {
+          onSuccess: () => {},
+        }
+      );
+    } else {
+      window.location.reload();
+    }
   };
 
   return (
@@ -25,4 +40,5 @@ const Language = ({ className }) => {
     </IconButton>
   );
 };
+
 export default Language;

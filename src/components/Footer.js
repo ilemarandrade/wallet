@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const Footer = () => {
   const { t } = useTranslation();
   return (
-    <Box sx={{ minHeight: 10, color: "white" }}>
+    <Box sx={{ minHeight: 10, color: "white" }} component="footer">
       <Typography align="center">{t("footer")}</Typography>
     </Box>
   );

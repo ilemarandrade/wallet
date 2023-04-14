@@ -1,13 +1,18 @@
 import axios from "axios";
 import routes from "../constants/routes";
 import environment from "./environment";
-import { getLocalStorageKey, removeLocalStorageKey } from "./localstoragesKeys";
+import {
+  getLocalStorageKey,
+  removeLocalStorageKey,
+  userLanguage,
+} from "./localstoragesKeys";
 
 const instance = axios.create({
   baseURL: environment.API_BASE_URL,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
+    lang: userLanguage(),
   },
 });
 
@@ -22,6 +27,7 @@ const applyErrorInterceptor = (error) => {
     instance.defaults.headers.common.Authorization = "";
     window.location.href = routes.LOGIN;
   }
+
   return Promise.reject(error?.response);
 };
 
@@ -31,6 +37,7 @@ const handleRequest = (config) => {
     ...config,
     headers: { ...config.headers, Authorization: `Bearer ${token}` },
   };
+
   return newConfig;
 };
 

@@ -2,6 +2,7 @@ import * as yup from "yup";
 import i18next from "../utils/traductions/i18n";
 
 const { t } = i18next;
+
 yup.setLocale({
   mixed: {
     required: t("validation_message.required"),
