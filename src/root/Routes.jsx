@@ -17,7 +17,7 @@ const Container = styled.div`
   margin-bottom: 48px;
   padding: 48px 0px;
   position: relative;
-
+  
   ${theme.breakpoints.down("sm")}{
     padding-top: 10vh;
     margin-bottom: 0px;
@@ -52,6 +52,7 @@ export const privateRoutes = [
 const Routes = () => {
   const isFetching = useIsFetching();
   const isMutating = useIsMutating();
+
   return (
     <Container sx={{ mb: 6, paddingY: 6 }}>
       <LanguageStyles />

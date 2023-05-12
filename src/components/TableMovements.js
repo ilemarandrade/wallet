@@ -49,6 +49,7 @@ const TableHeadStyles = styled(TableHead)(
   }
 `
 );
+
 const columns = [
   {
     label: i18next.t("date"),
@@ -79,6 +80,7 @@ const columns = [
     id: "actions",
   },
 ];
+
 const useStyles = makeStyles({
   root: {
     width: "100%",
