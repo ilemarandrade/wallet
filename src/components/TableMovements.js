@@ -11,13 +11,7 @@ import TableRow from "@material-ui/core/TableRow";
 import moment from "moment";
 import styled from "styled-components";
 import i18next from "../utils/traductions/i18n";
-import {
-  Checkbox,
-  FormControlLabel,
-  IconButton,
-  Tooltip,
-  useMediaQuery,
-} from "@material-ui/core";
+import { IconButton, Tooltip, useMediaQuery } from "@material-ui/core";
 import MovementsCell from "./MovementsCell";
 import { useTranslation } from "react-i18next";
 import MovementDetails from "./MovementDetails";
@@ -25,19 +19,6 @@ import { useTheme } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import currency from "../utils/currency";
-
-const CheckboxStyles = styled(FormControlLabel)(
-  ({ theme }) => `
-  color: white;
-  margin-left: 0px;
-  & svg{
-    fill: ${theme.palette.primary.main};
-  }
-  ${[theme.breakpoints.down(600)]}{
-  }
-
-`
-);
 
 const TableHeadStyles = styled(TableHead)(
   ({ theme }) => `
@@ -104,23 +85,25 @@ const useStyles = makeStyles({
   },
 });
 
-export default function StickyHeadTable({ data }) {
+export default function TableMovements({
+  data,
+  page,
+  setPage,
+  rowsPerPage,
+  setRowsPerPage,
+  total,
+  seeRemovedMoves,
+}) {
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [movementSelected, setMovementSelected] = useState(null);
-  const isDesktop = useMediaQuery((theme) => theme.breakpoints.up("sm"));
-  const [seeRemovedMoves, setSeeRemovedMoves] = useState(false);
-  const movements = data.filter(
-    ({ wasRemoved }) => wasRemoved === seeRemovedMoves
-  );
-  const movementsPerPage = movements.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage
-  );
-
   const theme = useTheme();
   const { t } = useTranslation();
+
+  const [movementSelected, setMovementSelected] = useState(null);
+
+  const isDesktop = useMediaQuery((theme) => theme.breakpoints.up("sm"));
+
+  const movements = data;
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -138,21 +121,13 @@ export default function StickyHeadTable({ data }) {
   };
 
   useEffect(() => {
-    setPage(0);
-  }, [seeRemovedMoves]);
+    if (seeRemovedMoves) {
+      setPage(0);
+    }
+  }, [seeRemovedMoves, setPage]);
 
   return (
     <>
-      <CheckboxStyles
-        control={
-          <Checkbox
-            checked={seeRemovedMoves}
-            onChange={() => setSeeRemovedMoves(!seeRemovedMoves)}
-            color="primary"
-          />
-        }
-        label={t("see_removed_moves")}
-      />
       {!!movementSelected && (
         <MovementDetails onClose={handleCloseDetails} data={movementSelected} />
       )}
@@ -174,7 +149,7 @@ export default function StickyHeadTable({ data }) {
                 </TableRow>
               </TableHeadStyles>
               <TableBody>
-                {movementsPerPage.map((row) => {
+                {movements.map((row) => {
                   return (
                     <TableRow
                       hover
@@ -261,14 +236,14 @@ export default function StickyHeadTable({ data }) {
           </TableContainer>
         ) : (
           <MovementsCell
-            data={movementsPerPage}
+            data={movements}
             movementSelected={handleMovementSelected}
           />
         )}
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={movements.length}
+          count={total}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
