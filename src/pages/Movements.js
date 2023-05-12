@@ -77,12 +77,12 @@ const Movements = () => {
         label={t("see_removed_moves")}
       />
       <TableMovements
-        data={data.movements || []}
+        data={data?.movements || []}
         page={page}
         setPage={setPage}
         rowsPerPage={rowsPerPage}
         setRowsPerPage={setRowsPerPage}
-        total={data.total}
+        total={data?.total || 0}
       />
     </MainLayoutStyles>
   );
