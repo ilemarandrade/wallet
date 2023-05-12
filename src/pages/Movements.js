@@ -4,7 +4,6 @@ import useMovements from "../hook/api/useMovements";
 import TableMovements from "../components/TableMovements";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 
@@ -36,7 +35,6 @@ const CheckboxStyles = styled(FormControlLabel)(
 );
 
 const Movements = () => {
-  const history = useHistory();
   const { t } = useTranslation();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
