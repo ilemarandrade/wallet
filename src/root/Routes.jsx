@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import routes from "../constants/routes";
+import { publicRoutes, privateRoutes } from "../constants/routes";
 import Init from "../pages/Init";
 import Dashboard from "../pages/Dashboard";
 import Recharge from "../pages/Recharge";
@@ -12,6 +12,7 @@ import { useIsFetching, useIsMutating } from "@tanstack/react-query";
 import styled from "styled-components";
 import Language from "../components/Language";
 import { useStateUser } from "../providers/UserProvider";
+
 const Container = styled.div`
   ${({ theme }) => `
   min-height: calc(100vh - 72px);
@@ -20,10 +21,10 @@ const Container = styled.div`
   position: relative;
   
   ${theme.breakpoints.down("sm")}{
+    min-height: calc(100vh - 24px);
     padding-top: 10vh;
     margin-bottom: 0px;
   }
-
 `}
 `;
 
@@ -32,24 +33,26 @@ const LanguageStyles = styled(Language)`
   top: 0px;
   right: 10px;
 `;
-export const privateRoutes = [
+
+export const privateViews = [
   {
     Component: Recharge,
-    path: routes.RECHARGE,
+    path: privateRoutes.RECHARGE,
   },
   {
     Component: Pay,
-    path: routes.PAY,
+    path: privateRoutes.PAY,
   },
   {
     Component: Movements,
-    path: routes.MOVEMENTS,
+    path: privateRoutes.MOVEMENTS,
   },
   {
     Component: Dashboard,
-    path: routes.DASHBOARD,
+    path: privateRoutes.DASHBOARD,
   },
 ];
+
 const Routes = () => {
   const isFetching = useIsFetching();
   const isMutating = useIsMutating();
@@ -60,15 +63,15 @@ const Routes = () => {
       {!isLogged && <LanguageStyles />}
       <Loading open={!!isFetching || !!isMutating} />
       <Switch>
-        {privateRoutes.map(({ path, Component }) => (
+        {privateViews.map(({ path, Component }) => (
           <PrivateRoute exact path={path} key={path}>
             <Component />
           </PrivateRoute>
         ))}
-        <Route path={routes.INIT}>
+        <Route path={publicRoutes.INIT}>
           <Init />
         </Route>
-        <Redirect to={routes.INIT} />
+        <Redirect to={publicRoutes.INIT} />
       </Switch>
     </Container>
   );

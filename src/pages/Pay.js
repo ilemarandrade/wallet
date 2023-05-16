@@ -7,7 +7,7 @@ import usePay from "../hook/api/usePay";
 import yup from "../utils/validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-hot-toast";
-import routes from "../constants/routes";
+import { publicRoutes } from "../constants/routes";
 import { useTranslation } from "react-i18next";
 import TextFieldOwn from "../components/TextFieldOwn";
 import { useQueryClient } from "@tanstack/react-query";
@@ -42,7 +42,7 @@ function Pay() {
           queryClient.refetchQueries({
             queryKey: ["movements"],
           });
-          history.push(routes.DASHBOARD);
+          history.push(publicRoutes.DASHBOARD);
         },
         onError: ({ data: { message } }) => {
           toast.error(message || `${t("toast_message.there_is_error")}`);

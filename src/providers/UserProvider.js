@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useHistory, useLocation } from "react-router-dom";
 import Loading from "../components/Loading";
-import routes, { routesPublic } from "../constants/routes";
+import { privateRoutes, publicRoutes } from "../constants/routes";
 import useGetUserInformation from "../hook/api/useGetUserInformation";
 import {
   getLocalStorageKey,
@@ -36,7 +36,7 @@ const UserProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [profile, setProfile] = useState({});
   const queryClient = useQueryClient();
-  const isRoutePublic = Object.values(routesPublic).includes(pathname);
+  const isRoutePublic = Object.values(publicRoutes).includes(pathname);
   const [requestTokenVerification, setRequestTokenVerification] =
     useState(false);
 
@@ -50,7 +50,7 @@ const UserProvider = ({ children }) => {
       setIsLogged(true);
       setProfile(data.user);
       if (isRoutePublic) {
-        history.push(routes.DASHBOARD);
+        history.push(privateRoutes.DASHBOARD);
       } else {
         history.push(pathname);
       }
@@ -73,7 +73,7 @@ const UserProvider = ({ children }) => {
           setIsLogged(true);
           setRequestTokenVerification(true);
           queryClient.refetchQueries({ queryKey: ["get_user_information"] });
-          history.push(routes.DASHBOARD);
+          history.push(privateRoutes.DASHBOARD);
         },
         onError: ({ data: { message } }) => {
           toast.error(message || `${t("toast_message.there_is_error")}`);
@@ -87,7 +87,7 @@ const UserProvider = ({ children }) => {
     queryClient.clear();
     setRequestTokenVerification(false);
     setIsLogged(false);
-    history.push(routes.LOGIN);
+    history.push(publicRoutes.LOGIN);
     toast.success(t("toast_message.logout_success"));
   };
 
@@ -108,7 +108,7 @@ const UserProvider = ({ children }) => {
 
   useEffect(() => {
     if (isLogged && isRoutePublic) {
-      history.push(routes.DASHBOARD);
+      history.push(privateRoutes.DASHBOARD);
     }
   }, [history, isLogged, isRoutePublic]);
   return (

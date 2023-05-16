@@ -5,9 +5,10 @@ const customTheme = createTheme({
     MuiButton: {
       root: {
         height: 56,
-      },
-      containedPrimary: {
         fontWeight: 600,
+      },
+      contained: {
+        color: "#1ab187",
       },
     },
     MuiTextField: {

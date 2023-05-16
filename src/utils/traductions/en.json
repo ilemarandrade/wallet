@@ -1,6 +1,10 @@
 {
   "forms": {
-    "titles": { "login": "Login", "signup": "Sign up" },
+    "titles": {
+      "login": "Login",
+      "signup": "Sign up",
+      "forgot_password": "Recover password"
+    },
     "labels": {
       "email": "Email",
       "password": "Password",
@@ -10,14 +14,16 @@
       "phone": "Phone",
       "confirmation_password": "Confirmation Password",
       "amount": "Amount",
-      "concept": "Concept"
+      "concept": "Concept",
+      "new_password": "New Password"
     },
     "buttons": {
       "register": "Register",
       "login": "Log In",
       "delete": "Delete",
       "back": "Back",
-      "continue": "Continue"
+      "continue": "Continue",
+      "send": "Send"
     }
   },
   "services": {
@@ -76,5 +82,6 @@
   "row_per_page": "Row per page",
   "warning_action": "This action is irreversible. \nAre you sure to proceed?",
   "review": "Review",
-  "see_removed_moves": "See removed moves"
+  "see_removed_moves": "See removed moves",
+  "forgot_password": "Forgot password?"
 }

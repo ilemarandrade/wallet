@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, Typography } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import yup from "../utils/validation";
@@ -7,6 +7,8 @@ import TextFieldPassword from "../components/TextFieldPassword";
 import { useStateUser } from "../providers/UserProvider";
 import { useTranslation } from "react-i18next";
 import TextFieldOwn from "../components/TextFieldOwn";
+import { Link } from "react-router-dom";
+import { publicRoutes } from "../constants/routes";
 
 const Schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -55,7 +57,14 @@ function Login() {
             />
           )}
         />
-        <Box sx={{ mt: 1 }}>
+        <Typography
+          component={Link}
+          to={publicRoutes.FORGOT_PASSWORD}
+          style={{ color: "white", textDecoration: "none" }}
+        >
+          {t("forgot_password")}
+        </Typography>
+        <Box sx={{ mt: 2 }}>
           <Button variant="contained" color="primary" fullWidth type="submit">
             {t("forms.buttons.login")}
           </Button>

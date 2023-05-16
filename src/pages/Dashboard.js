@@ -1,29 +1,20 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { Box, Button } from "@material-ui/core";
 import MainLayout from "../layout/MainLayout";
-import routes from "../constants/routes";
+import { privateRoutes } from "../constants/routes";
 import useCheckBalance from "../hook/api/useCheckBalance";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import currency from "../utils/currency";
+import { Link } from "react-router-dom";
 
 function Dashboard() {
-  let history = useHistory();
   const { t } = useTranslation();
   const { data } = useCheckBalance({
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
-  const goRecarga = () => {
-    history.push(routes.RECHARGE);
-  };
-  const goPagar = () => {
-    history.push(routes.PAY);
-  };
-  const goMovements = () => {
-    history.push(routes.MOVEMENTS);
-  };
+
   const goConsulta = () => {
     toast.success(
       `${t("toast_message.available_balance")} ${currency(
@@ -36,7 +27,8 @@ function Dashboard() {
     <MainLayout title="Dashboard">
       <Box sx={{ mb: 2 }}>
         <Button
-          onClick={goRecarga}
+          component={Link}
+          to={privateRoutes.RECHARGE}
           variant="contained"
           color="primary"
           fullWidth
@@ -45,7 +37,13 @@ function Dashboard() {
         </Button>
       </Box>
       <Box sx={{ mb: 2 }}>
-        <Button onClick={goPagar} variant="contained" color="primary" fullWidth>
+        <Button
+          component={Link}
+          to={privateRoutes.PAY}
+          variant="contained"
+          color="primary"
+          fullWidth
+        >
           {t("services.pay")}
         </Button>
       </Box>
@@ -60,7 +58,8 @@ function Dashboard() {
         </Button>
       </Box>
       <Button
-        onClick={goMovements}
+        component={Link}
+        to={privateRoutes.MOVEMENTS}
         variant="contained"
         color="primary"
         fullWidth

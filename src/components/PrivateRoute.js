@@ -2,7 +2,7 @@ import { Box, ButtonBase, Grid, IconButton } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { Route, useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import routes from "../constants/routes";
+import { publicRoutes, privateRoutes } from "../constants/routes";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import { useStateUser } from "../providers/UserProvider";
 import { useTranslation } from "react-i18next";
@@ -58,16 +58,16 @@ const PrivateRoute = (props) => {
   const { logout, isLogged, profile } = useStateUser();
   const history = useHistory();
   const { pathname } = useLocation();
-  const notDashboard = pathname !== routes.DASHBOARD;
+  const notDashboard = pathname !== privateRoutes.DASHBOARD;
   const { t } = useTranslation();
 
   const backToDashboard = () => {
-    history.push(routes.DASHBOARD);
+    history.push(privateRoutes.DASHBOARD);
   };
 
   useEffect(() => {
     if (!isLogged) {
-      history.push(routes.LOGIN);
+      history.push(publicRoutes.LOGIN);
     }
   }, [history, isLogged]);
 
