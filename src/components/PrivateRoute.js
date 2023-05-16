@@ -8,14 +8,16 @@ import { useStateUser } from "../providers/UserProvider";
 import { useTranslation } from "react-i18next";
 import Language from "./Language";
 
-const ContainerButtons = styled(Grid)`
+const ContainerButtons = styled(Grid)(
+  ({ notDashboard }) => `
   position: relative;
   top: -40px;
-  justify-content: space-between;
+  justify-content: ${notDashboard ? "space-between" : "flex-end"};
   ${({ theme }) => theme.breakpoints.down("sm")} {
     top: -9vh;
   }
-`;
+`
+);
 
 const ButtonStyles = styled.div`
   background: #1ab187;
@@ -44,8 +46,7 @@ const CloseSessionStyles = styled(ButtonBase)`
 `;
 
 const ArrowBackStyles = styled(IconButton)(
-  ({ show }) => `
-  visibility: ${show ? "" : "hidden"};
+  () => `
   & svg {
     fill: white;
     font-size: 2rem;
@@ -59,9 +60,11 @@ const PrivateRoute = (props) => {
   const { pathname } = useLocation();
   const notDashboard = pathname !== routes.DASHBOARD;
   const { t } = useTranslation();
+
   const backToDashboard = () => {
     history.push(routes.DASHBOARD);
   };
+
   useEffect(() => {
     if (!isLogged) {
       history.push(routes.LOGIN);
@@ -74,10 +77,12 @@ const PrivateRoute = (props) => {
 
   return (
     <Route {...props}>
-      <ContainerButtons container>
-        <ArrowBackStyles show={notDashboard} onClick={backToDashboard}>
-          <KeyboardBackspaceIcon size="large" />
-        </ArrowBackStyles>
+      <ContainerButtons container notDashboard={notDashboard}>
+        {notDashboard && (
+          <ArrowBackStyles onClick={backToDashboard}>
+            <KeyboardBackspaceIcon size="large" />
+          </ArrowBackStyles>
+        )}
         <Box sx={{ display: "flex" }}>
           <Language />
           <ButtonStyles>
