@@ -1,6 +1,10 @@
 {
   "forms": {
-    "titles": { "login": "Login", "signup": "Registro" },
+    "titles": {
+      "login": "Login",
+      "signup": "Registro",
+      "forgot_password": "Recuperar contraseña"
+    },
     "labels": {
       "email": "Email",
       "password": "Contraseña",
@@ -10,14 +14,16 @@
       "phone": "Teléfono",
       "confirmation_password": "Confirmación de Contraseña",
       "amount": "Monto",
-      "concept": "Concepto"
+      "concept": "Concepto",
+      "new_password": "Nueva Contraseña"
     },
     "buttons": {
       "register": "Registrar",
       "login": "Iniciar Sesión",
       "delete": "Eliminar",
       "back": "Volver",
-      "continue": "Continuar"
+      "continue": "Continuar",
+      "send": "Enviar"
     }
   },
   "services": {
@@ -76,5 +82,6 @@
   "row_per_page": "Filas x página",
   "warning_action": "Esta acción es irreversible. \n¿Estás seguro de continuar?",
   "review": "Revisar",
-  "see_removed_moves": "Ver movimientos eliminados"
+  "see_removed_moves": "Ver movimientos eliminados",
+  "forgot_password": "¿Olvidaste la contraseña?"
 }
