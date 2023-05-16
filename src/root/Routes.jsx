@@ -11,6 +11,7 @@ import Loading from "../components/Loading";
 import { useIsFetching, useIsMutating } from "@tanstack/react-query";
 import styled from "styled-components";
 import Language from "../components/Language";
+import { useStateUser } from "../providers/UserProvider";
 const Container = styled.div`
   ${({ theme }) => `
   min-height: calc(100vh - 72px);
@@ -52,10 +53,11 @@ export const privateRoutes = [
 const Routes = () => {
   const isFetching = useIsFetching();
   const isMutating = useIsMutating();
+  const { isLogged } = useStateUser();
 
   return (
     <Container sx={{ mb: 6, paddingY: 6 }}>
-      <LanguageStyles />
+      {!isLogged && <LanguageStyles />}
       <Loading open={!!isFetching || !!isMutating} />
       <Switch>
         {privateRoutes.map(({ path, Component }) => (
