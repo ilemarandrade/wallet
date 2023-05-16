@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Box, Typography } from "@material-ui/core";
 import { useLocation } from "react-router-dom";
-import routes from "../constants/routes";
+import { privateRoutes } from "../constants/routes";
 
 export const ContainerMain = styled.div`
   ${({ theme, fullWidth }) => `
@@ -32,7 +32,7 @@ function MainLayout({ title, children, className }) {
       <Typography variant="h4" component="h1" align="center">
         {title}
       </Typography>
-      <ContainerMain fullWidth={pathname === routes.MOVEMENTS}>
+      <ContainerMain fullWidth={pathname === privateRoutes.MOVEMENTS}>
         {children}
       </ContainerMain>
     </Box>

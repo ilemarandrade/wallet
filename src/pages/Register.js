@@ -6,7 +6,7 @@ import yup from "../utils/validation";
 import useRegisterUser from "../hook/api/useRegisterUser";
 import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom";
-import routes from "../constants/routes";
+import { publicRoutes } from "../constants/routes";
 import { useTranslation } from "react-i18next";
 import i18n from "../utils/traductions/i18n";
 import TextFieldPassword from "../components/TextFieldPassword";
@@ -40,7 +40,7 @@ function Register() {
       onSuccess: () => {
         reset();
         toast.success(`${t("toast_message.register_success")}`);
-        history.push(routes.LOGIN);
+        history.push(publicRoutes.LOGIN);
       },
       onError: ({ data: { message } }) => {
         toast.error(message || `${t("toast_message.there_is_error")}`);

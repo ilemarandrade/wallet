@@ -1,5 +1,5 @@
 import axios from "axios";
-import routes from "../constants/routes";
+import { publicRoutes } from "../constants/routes";
 import environment from "./environment";
 import {
   getLocalStorageKey,
@@ -25,7 +25,7 @@ const applyErrorInterceptor = (error) => {
   if (error?.response?.status === 401 || error?.response?.status === 403) {
     removeLocalStorageKey();
     instance.defaults.headers.common.Authorization = "";
-    window.location.href = routes.LOGIN;
+    window.location.href = publicRoutes.LOGIN;
   }
 
   return Promise.reject(error?.response);
