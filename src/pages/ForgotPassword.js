@@ -78,7 +78,7 @@ function ForgotPassword() {
           toast.success(message);
           history.push(publicRoutes.INIT);
         },
-        onError: ({ message }) => {
+        onError: ({ data: { message } }) => {
           toast.error(message || `${t("toast_message.there_is_error")}`);
         },
       }
