@@ -16,6 +16,7 @@ import Header from "../components/Header";
 const RootRoutes = styled(Grid)`
   min-height: calc(100vh - 48px);
   margin-bottom: 24px;
+  padding-top: 72px;
 `;
 
 export const privateViews = [
