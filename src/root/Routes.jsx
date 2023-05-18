@@ -10,28 +10,13 @@ import PrivateRoute from "../components/PrivateRoute";
 import Loading from "../components/Loading";
 import { useIsFetching, useIsMutating } from "@tanstack/react-query";
 import styled from "styled-components";
-import Language from "../components/Language";
-import { useStateUser } from "../providers/UserProvider";
+import { Grid } from "@material-ui/core";
+import Header from "../components/Header";
 
-const Container = styled.div`
-  ${({ theme }) => `
-  min-height: calc(100vh - 72px);
-  margin-bottom: 48px;
-  padding: 48px 0px;
-  position: relative;
-  
-  ${theme.breakpoints.down("sm")}{
-    min-height: calc(100vh - 24px);
-    padding-top: 10vh;
-    margin-bottom: 0px;
-  }
-`}
-`;
-
-const LanguageStyles = styled(Language)`
-  position: absolute;
-  top: 0px;
-  right: 10px;
+const RootRoutes = styled(Grid)`
+  min-height: calc(100vh - 48px);
+  margin-bottom: 24px;
+  padding-top: 72px;
 `;
 
 export const privateViews = [
@@ -56,11 +41,10 @@ export const privateViews = [
 const Routes = () => {
   const isFetching = useIsFetching();
   const isMutating = useIsMutating();
-  const { isLogged } = useStateUser();
 
   return (
-    <Container sx={{ mb: 6, paddingY: 6 }}>
-      {!isLogged && <LanguageStyles />}
+    <RootRoutes container justifyContent="center" alignContent="center">
+      <Header />
       <Loading open={!!isFetching || !!isMutating} />
       <Switch>
         {privateViews.map(({ path, Component }) => (
@@ -73,7 +57,7 @@ const Routes = () => {
         </Route>
         <Redirect to={publicRoutes.INIT} />
       </Switch>
-    </Container>
+    </RootRoutes>
   );
 };
 
