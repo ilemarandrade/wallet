@@ -16,7 +16,10 @@ import Header from "../components/Header";
 const RootRoutes = styled(Grid)`
   min-height: calc(100vh - 48px);
   margin-bottom: 24px;
-  padding-top: 72px;
+  padding-top: 15vh;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    padding-top: 18vh;
+  }
 `;
 
 export const privateViews = [
@@ -43,7 +46,7 @@ const Routes = () => {
   const isMutating = useIsMutating();
 
   return (
-    <RootRoutes container justifyContent="center" alignContent="center">
+    <RootRoutes container justifyContent="center" alignContent="flex-start">
       <Header />
       <Loading open={!!isFetching || !!isMutating} />
       <Switch>
