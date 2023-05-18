@@ -10,7 +10,7 @@ import Language from "./Language";
 
 const HeaderStyles = styled(Grid)(
   ({ isBackIconVisible }) => `
-    width: 100vw;
+    width: 98vw;
     position: absolute;
     top: 1vh;
     justify-content: ${isBackIconVisible ? "space-between" : "flex-end"};
