@@ -14,8 +14,6 @@ const HeaderStyles = styled(Grid)(
     position: absolute;
     top: 1vh;
     justify-content: ${isBackIconVisible ? "space-between" : "flex-end"};
-    ${({ theme }) => theme.breakpoints.down("sm")} {
-      }
   `
 );
 
